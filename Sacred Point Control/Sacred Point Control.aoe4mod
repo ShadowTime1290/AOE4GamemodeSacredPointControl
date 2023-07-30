@@ -3,6 +3,6 @@
 	<DataGenericPath>assets</DataGenericPath>
 	<DataIntermediatePath>cache</DataIntermediatePath>
 	<ID>8334e5fe-187e-4773-b9dc-12547d046c01</ID>
-	<LocDBPath>locdb\Sacred Conquest.locdb</LocDBPath>
+	<LocDBPath>locdb\Sacred Point Control.locdb</LocDBPath>
 	<Type>Extension</Type>
 </Mod>

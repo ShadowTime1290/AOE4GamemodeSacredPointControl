@@ -57,6 +57,13 @@ end
 -- Called on match initialization before handing control to the player
 function Mod_OnInit()
 	
+
+
+end
+
+-- Called after initialization is done when game is fading up from black
+function Mod_Start()
+	
 	-- Set player to Age 4, Resources to 0 except gold at 1600 and population cap to 200
 	for i, player in pairs(PLAYERS) do
 		
@@ -74,13 +81,6 @@ function Mod_OnInit()
 		-- Set starting population cap to 200
 		Player_SetMaxPopulation(player.id, CT_Personnel, 200)	
 	end	
-end
-
--- Called after initialization is done when game is fading up from black
-function Mod_Start()
-	
-	
-	
 end
 
 -- Called when Core_SetPlayerDefeated() is invoked. Signals that a player has been eliminated from play due to defeat.

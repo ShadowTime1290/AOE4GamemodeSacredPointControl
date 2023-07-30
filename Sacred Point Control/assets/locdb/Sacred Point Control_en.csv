@@ -2,3 +2,32 @@
 1,,,Mod name.,,,Sacred Conquest
 2,,,Mod description.,,,Point capture game mode with sacred sites
 3,,,,,,Sacred Conquest
+4,,,,,,Starting Tickets
+5,,,,,,Sacred Point Conquest
+6,,,,,,"Capture and hold sacred points, draining your enemies of resources the longer you hold the points."
+7,,,,,,Tickets
+8,,,,,,800
+9,,,,,,Start with 800 tickets
+10,,,,,,Start with 800 tickets
+11,,,,,,Starting Tickets
+12,,,,,,Amount of tickets to start each player with. (Default: 1600)
+13,,,,,,Amount of tickets to start each player with. (Default: 1600)
+14,,,,,,800 Tickets
+15,,,,,,1200 Tickets
+16,,,,,,1600 Tickets
+17,,,,,,2000 Tickets
+18,,,,,,2400 Tickets
+19,,,,,,2800 Tickets
+20,,,,,,3600 Tickets
+21,,,,,,Ticket Multiplier
+22,,,,,,How fast tickets drain from holding Sacred Sites. (Default: 1x)
+23,,,,,,How fast tickets drain from holding Sacred Sites. (Default: 1x)
+24,,,,,,1x
+25,,,,,,2x
+26,,,,,,3x
+27,,,,,,Fast Drain
+28,,,,,,Should tickets drain faster if one team holds all the Sacred Sites? (Default: Enabled)
+29,,,,,,Enabled
+30,,,,,,Disabled
+31,,,,,,Should tickets drain faster if one team holds all the Sacred Sites? (Default: Enabled)
+32,,,,,,Default

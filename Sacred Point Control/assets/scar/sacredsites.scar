@@ -22,6 +22,7 @@ _religious = {
 	conversion_radius = 10.0,	-- Radius around holy sites within which a monk/unit must be to capture/neutralize it - must match value in Holy Site strategic_point_ext
 	update_interval = 0.125,
 	ticket_frequency = 1,
+	ticketLossMultiplier = 1,
 	time_victory = 8 * 60,		-- Countdown time to victory after all sites are captured (in seconds)	
 	timer_victory = "capture_victory_timer",
 	countdown_notifications = {	-- Points during countdown at which to update audio.   
@@ -276,10 +277,13 @@ function Religious_Tickets()
 		-- Gets the number of holy sites controlled by enemies
 		local sites = Religious_EnemySitesControlled(player.id)
 		
-		local resource_loss = sites * -1 * 1 
-		
-		Player_AddResource(player.id, RT_Gold, resource_loss) 
-		
+		local ticket_loss = sites * -1 * _religious.ticketLossMultiplier
+
+		if Player_GetResource(player_local.id, RT_Gold) <= ticket_loss then
+			Player_SetResource(player.id, RT_Gold, 0)
+		else
+			Player_AddResource(player.id, RT_Gold, resource_loss) 
+		end
 	end
 end
 
