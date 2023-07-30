@@ -1,0 +1,116 @@
+-----------------------------------------------------------------------
+
+-- Provide data to replay system through this script
+import("replay/replaystatviewer.scar")
+
+-----------------------------------------------------------------------
+-- Data
+-----------------------------------------------------------------------
+
+_religious = {
+	module = "Religious",		-- Module name
+	last_person_standing = false,	-- true = fixed teams, false = dynamic diplomacy (i.e. only 1 player can win)
+	conversion_radius = 10.0,	-- Radius around holy sites within which a monk/unit must be to capture/neutralize it - must match value in Holy Site strategic_point_ext
+	update_interval = 0.125,
+	time_victory = 8 * 60,		-- Countdown time to victory after all sites are captured (in seconds)	
+	timer_victory = "capture_victory_timer",
+	countdown_notifications = {	-- Points during countdown at which to update audio.   
+		{ time = 3 * 60 },		-- Arrange in decreasing order since music intensity increases when the last one triggers
+		{ time = 2 * 60 },
+		{ time = 1 * 60 },
+	},
+	icons = {
+		objective = "icons\\races\\common\\victory_conditions\\victory_condition_religious",  
+	},	
+	ebp = {
+		holy_site = BP_GetEntityBlueprint("holy_site"),
+	},
+	objective = {
+		control = nil,			-- ID of holy site control objective (win condition)
+	},
+	sites = {},
+	last_capturer = nil,
+	sfx = {
+		begin_capture_enemy = "sfx_ui_event_queue_religious_enemy_capture_start_play", 				-- Enemy begins capturing a neutral Holy Site (at 0%)
+		begin_capture_player = "sfx_ui_event_queue_religious_player_capture_start_play", 				-- Player begins capturing a neutral Holy Site (at 0%)
+		begin_capture_ally = "sfx_ui_event_queue_religious_player_capture_start_play", 				-- Ally begins capturing a neutral Holy Site (at 0%)
+		captured_enemy = "sfx_ui_event_queue_religious_enemy_captured_play", 	-- Enemy captured Holy Site
+		captured_player = "sfx_ui_event_queue_religious_player_captured_play", 	-- Player captured Holy Site
+		captured_ally = "sfx_ui_event_queue_religious_player_captured_play", 	-- Ally captured Holy Site
+		begin_neutralize_enemy = "sfx_ui_holy_site_contesting_start_enemy_play", 			-- Enemy begins neutralizing captured Holy Site (at 100%)
+		begin_neutralize_player = "sfx_ui_holy_site_contesting_start_player_play", 			-- Player begins neutralizing captured Holy Site (at 100%)
+		begin_neutralize_ally = "sfx_ui_holy_site_contesting_start_player_play", 			-- Ally begins neutralizing captured Holy Site (at 100%)
+		neutralized_enemy = "sfx_ui_holy_site_neutralized_enemy_play", 				-- Enemy neutralizes Holy Site with no Monks in range (if Monks in range, begin capture event will fire instead)
+		neutralized_player = "sfx_ui_holy_site_neutralized_player_play", 				-- Player neutralizes Holy Site with no Monks in range (if Monks in range, begin capture event will fire instead)
+		neutralized_ally = "sfx_ui_holy_site_neutralized_player_play", 					-- Ally neutralizes Holy Site with no Monks in range (if Monks in range, begin capture event will fire instead)
+		countdown_start_enemy_team = "mus_stinger_wonder_win_countdown_enemy",		-- Enemy captures all Holy Sites and initiates countdown
+		countdown_start_player_team = "mus_stinger_wonder_win_countdown_player",	-- Player/Ally captures all Holy Sites and initiates countdown
+		countdown_stop_enemy_team = "mus_stinger_religious_countdown_interrupted_enemy",					-- Enemy's countdown shut down
+		countdown_stop_player_team = "mus_stinger_religious_countdown_interrupted_player",							-- Player/Ally's countdown shut down
+		sfx_victory_timer_first = "sfx_ui_victory_countdown_update_first",
+		sfx_victory_timer_second = "sfx_ui_victory_countdown_update_second",
+		sfx_victory_timer_final = "sfx_ui_victory_countdown_update_final",
+		sfx_victory_timer_mix_event = "mus_shared_victory_countdown_mix_event",
+		sfx_victory_timer_mix_reset_event = "mus_shared_victory_countdown_mix_event_reset",
+		defeat = "ReligiousDefeatEvent", 											-- Enemy team wins
+		victory = "ReligiousVictoryEvent", 											-- Player's team wins
+	},
+	progress = {
+		min = 0,
+		max = 1.00,
+}
+
+}
+
+-----------------------------------------------------------------------
+-- Scripting framework
+-----------------------------------------------------------------------
+
+Core_RegisterModule(_religious.module)
+
+-----------------------------------------------------------------------
+-- Callbacks
+-----------------------------------------------------------------------
+
+-- Callback invoked by OnInit() in core.scar
+function Religious_OnInit()
+
+	-- Get local player
+	player_local = Core_GetPlayersTableEntry(Game_GetLocalPlayer())
+	
+	-- Create new EGroup
+	local eg = EGroup_CreateUnique()
+	-- Get all Holy Sites
+	World_GetBlueprintEntities(_religious.ebp.holy_site, eg)	
+	
+	-- For every Holy Site
+	for i = 1, EGroup_CountSpawned(eg) do
+		
+		-- Grab data for Holy Site
+		local site = {
+			id = Entity_GetID(EGroup_GetSpawnedEntityAt(eg, i)),
+			entity = EGroup_GetSpawnedEntityAt(eg, i),
+			pos = Entity_GetPosition(EGroup_GetSpawnedEntityAt(eg, i)),
+			player_last_capturing = nil,
+			color_last_capturing = nil, -- Stores the color used for progress bars. When Ally is last capturer, local player color is used
+			progress = _religious.progress.min,
+		}
+		
+		-- Store data globally
+		table.insert(_religious.sites, site)
+		
+		print(string.format("Religious_OnInit() %d holy sites found", #_religious.sites))
+		
+	end
+	
+	-- If no Holy Sites were found
+	if #_religious.sites == 0 then
+		print(string.format("Religious_OnInit() %d holy sites found", #_religious.sites))
+		-- Remove win condition module
+		Core_UnregisterModule(_religious.module)
+	else
+		-- Initialize replay stats
+		ReplayStatViewer_PopulateReplayStatTabs({"ReligiousTrackerTemplate"})
+		ReplayStatViewer_RegisterPlayerDataContextUpdater(Religious_UpdatePlayerStats)
+	end
+end

@@ -1,0 +1,28 @@
+<DataWarehouse>
+	<!--Sacred Conquest/-->
+	<DataObject Name="Sacred Point Control" Type="Mod" Id="2629808300709890419" Version="1">
+		<DataProperty Name="m_description" Type="Object">
+			<DataValue Name="util::ReflectLocString">2082296643212964928</DataValue>
+			<!--Sacred Conquest/util::ReflectLocString/-->
+			<DataObject Name="" Type="util::ReflectLocString" Id="2082296643212964928" OwnerId="2629808300709890419">
+				<DataProperty Name="m_modPart2" Type="UInt32" Value="1410522297"/>
+				<DataProperty Name="m_modPart3" Type="UInt32" Value="23856253"/>
+				<DataProperty Name="m_modPart0" Type="UInt32" Value="2201282046"/>
+				<DataProperty Name="m_modPart1" Type="UInt32" Value="1198725246"/>
+				<DataProperty Name="m_locStringKey" Type="Int32" Value="2"/>
+			</DataObject>
+		</DataProperty>
+		<DataProperty Name="m_name" Type="Object">
+			<DataValue Name="util::ReflectLocString">7742493849245840087</DataValue>
+			<!--Sacred Conquest/util::ReflectLocString/-->
+			<DataObject Name="" Type="util::ReflectLocString" Id="7742493849245840087" OwnerId="2629808300709890419">
+				<DataProperty Name="m_modPart2" Type="UInt32" Value="1410522297"/>
+				<DataProperty Name="m_modPart3" Type="UInt32" Value="23856253"/>
+				<DataProperty Name="m_modPart0" Type="UInt32" Value="2201282046"/>
+				<DataProperty Name="m_modPart1" Type="UInt32" Value="1198725246"/>
+				<DataProperty Name="m_locStringKey" Type="Int32" Value="1"/>
+			</DataObject>
+		</DataProperty>
+	</DataObject>
+</DataWarehouse>
+
