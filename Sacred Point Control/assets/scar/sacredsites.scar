@@ -124,6 +124,8 @@ function Religious_OnInit()
 		-- Initialize replay stats
 		ReplayStatViewer_PopulateReplayStatTabs({"ReligiousTrackerTemplate"})
 		ReplayStatViewer_RegisterPlayerDataContextUpdater(Religious_UpdatePlayerStats)
+		Mod_ChangeCosts()
+		Mod_RemoveGold()
 	end
 end
 	
@@ -189,6 +191,82 @@ end
 -----------------------------------------------------------------------
 -- Rules
 -----------------------------------------------------------------------
+
+function Mod_RemoveGold()
+	gold_deposits = EGroup_CreateIfNotFound("gold_deposits")
+	
+	World_GetAllEntitiesOfType(gold_deposits, "gold")
+
+	for i = 1, EGroup_CountSpawned(gold_deposits) do
+		local entityId = Entity_GetID(EGroup_GetSpawnedEntityAt(gold_deposits, i))
+		local entity = EGroup_GetSpawnedEntityAt(gold_deposits, i)
+		
+		Entity_Destroy(entity)
+	end	
+	
+end
+
+function Mod_ChangeCosts()
+	local unitTypes = {
+		"military",
+		"worker",
+		"naval_unit",
+		"building"
+	}
+	 
+	local upgradeTypes = {
+		"military_upgrade",
+		"economic_upgrade"	
+	}
+	
+	local siegeTypes = {
+		"siege"
+	}	
+	
+	local buildingTypes = {
+		"building"
+	}	
+	
+	local unitBps = BP_GetEntityBlueprintsWithType(unitTypes)
+	local buildingBps = BP_GetEntityBlueprintsWithType(buildingTypes)
+	local siegeBps = BP_GetEntityBlueprintsWithType(siegeTypes)
+	local upgradeBps = BP_GetUpgradesMatchingTypes(upgradeTypes)
+	
+	for i, unit in pairs(unitBps) do
+		local cost = Player_GetEntityBPCost(player_local.id, unit)
+		local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
+		local divide = 80
+		if table_contains(siegeBps, unit) then
+			divide = 20
+		elseif table_contains(buildingBps, unit) then
+			divide = 10
+		end
+		local ticketCost = math.max(math.floor((totalResourceCost / divide) + 0.5), 1)
+		Modify_EntityCost(player_local.id, unit, RT_Food, 0, MUT_Set, true)
+		Modify_EntityCost(player_local.id, unit, RT_Wood, 0, MUT_Set, true)
+		Modify_EntityCost(player_local.id, unit, RT_Stone, 0, MUT_Set, true)
+		Modify_EntityCost(player_local.id, unit, RT_Gold, ticketCost, MUT_Set, true)
+	end
+	
+	for i, upgrade in pairs(upgradeBps) do
+		local cost = Player_GetUpgradeBPCost(player_local.id, upgrade)
+		local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
+		local ticketCost = math.max(math.floor((totalResourceCost / 40) + 0.5), 1)
+		Modify_UpgradeCost(player_local.id, upgrade, RT_Food, 0, MUT_Set, true)
+		Modify_UpgradeCost(player_local.id, upgrade, RT_Wood, 0, MUT_Set, true)
+		Modify_UpgradeCost(player_local.id, upgrade, RT_Stone, 0, MUT_Set, true)
+		Modify_UpgradeCost(player_local.id, upgrade, RT_Gold, ticketCost, MUT_Set, true)
+	end
+end
+
+function table_contains(tbl, x)
+    for _, v in pairs(tbl) do
+        if v == x then 
+            return true 
+        end
+    end
+    return false
+end
 
 function Religious_Tickets()
 

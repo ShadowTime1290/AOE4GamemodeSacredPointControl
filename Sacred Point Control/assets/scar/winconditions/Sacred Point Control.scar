@@ -57,9 +57,23 @@ end
 -- Called on match initialization before handing control to the player
 function Mod_OnInit()
 	
-	
-	
-	
+	-- Set player to Age 4, Resources to 0 except gold at 1600 and population cap to 200
+	for i, player in pairs(PLAYERS) do
+		
+		-- Set player starting Ages to Imperial
+		-- Ages are mapped to: Dark Age = 1, Feudal Age = 2, Castle Age = 3, Imperial Age = 4
+		Player_SetCurrentAge(player.id, 4)
+		
+		-- Set player starting resources
+		-- RT stands for Resource Type
+		Player_SetResource(player.id, RT_Food, 0)		
+		Player_SetResource(player.id, RT_Wood, 0)
+		Player_SetResource(player.id, RT_Gold, 1600)
+		Player_SetResource(player.id, RT_Stone, 0)
+		
+		-- Set starting population cap to 200
+		Player_SetMaxPopulation(player.id, CT_Personnel, 200)	
+	end	
 end
 
 -- Called after initialization is done when game is fading up from black
