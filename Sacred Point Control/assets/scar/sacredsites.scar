@@ -15,6 +15,7 @@ import("replay/replaystatviewer.scar")
 -----------------------------------------------------------------------
 -- Data
 -----------------------------------------------------------------------
+assigned = false
 
 _religious = {
 	module = "Religious",		-- Module name
@@ -253,7 +254,7 @@ function Mod_ChangeCosts()
 		Modify_EntityCost(player_local.id, unit, RT_Stone, 0, MUT_Set, true)
 		Modify_EntityCost(player_local.id, unit, RT_Gold, ticketCost, MUT_Set, true)
 
-		--Modify_EntityBuildTime(player_local.id, unit, 0.1) 
+		Modify_EntityBuildTime(player_local.id, unit, 0.1) 
 	end
 	
 	for i, upgrade in pairs(upgradeBps) do
@@ -281,29 +282,33 @@ function Religious_Tickets()
 	-- For every player
 	for j, player in pairs(PLAYERS) do
 		
-		-- Gets the number of holy sites controlled by enemies
-		local sites = Religious_EnemySitesControlled(player)
-		
-		if sites ~= 0 then
-			local multiplier = _religious.options.ticket_multiplier
-			
-			if (_religious.options.fast_drain and sites == #_religious.sites) then
-				multiplier = multiplier + 1
-			end
-			
-			local ticket_loss = sites * -1 * multiplier
-			local currentTickets = Player_GetResource(player_local.id, RT_Gold)
+		local currentTickets = Player_GetResource(player_local.id, RT_Gold)
+		tonumber(currentTickets)
 
-			if currentTickets == 0 then
-				print("O tickets left")
-			elseif currentTickets + ticket_loss <= 0 then
-				print("Tickets less than loss")
-				Player_AddResource(player.id, RT_Gold, (currentTickets * -1))
-				print("Set tickets to 0")
-			else
-				print("Removing tickets " .. ticket_loss)
-				Player_AddResource(player.id, RT_Gold, ticket_loss) 
-				print("Removed tickets")
+		if currentTickets == 0 then
+			print("No tickets left!")
+		else
+			-- Gets the number of holy sites controlled by enemies
+			local sites = Religious_EnemySitesControlled(player)
+
+			if sites ~= 0 then
+				local multiplier = _religious.options.ticket_multiplier
+
+				if (_religious.options.fast_drain and sites == #_religious.sites) then
+					multiplier = multiplier * 2
+				end
+
+				local ticket_loss = sites * -1 * multiplier
+
+				if currentTickets + ticket_loss <= 0 then
+					print("Tickets less than loss")
+					Player_AddResource(player.id, RT_Gold, (currentTickets * -1))
+					print("Set tickets to 0")
+				else
+					print("Removing tickets " .. ticket_loss)
+					Player_AddResource(player.id, RT_Gold, ticket_loss) 
+					print("Removed tickets")
+				end
 			end
 		end
 	end
