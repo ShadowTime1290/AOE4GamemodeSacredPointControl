@@ -253,7 +253,7 @@ function Mod_ChangeCosts()
 		Modify_EntityCost(player_local.id, unit, RT_Stone, 0, MUT_Set, true)
 		Modify_EntityCost(player_local.id, unit, RT_Gold, ticketCost, MUT_Set, true)
 
-		Modify_EntityBuildTime(player_local.id, unit, 0.1) 
+		--Modify_EntityBuildTime(player_local.id, unit, 0.1) 
 	end
 	
 	for i, upgrade in pairs(upgradeBps) do
