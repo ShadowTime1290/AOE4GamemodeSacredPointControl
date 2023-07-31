@@ -10,18 +10,18 @@
       <LayoutDocumentPaneGroup Orientation="Horizontal">
         <LayoutDocumentPane Id="608d21f1-32e0-49ed-851b-adc0bcd677a6">
           <LayoutDocument Title="mod.rdo" ContentId="Reflect|Essence.Editor.ReflectEditor.Controls.DefaultReflectControlActivator|0x247EF4B7572FC973" LastActivationTimeStamp="07/30/2023 22:05:11" />
-          <LayoutDocument Title="Sacred Point Control.scar" IsSelected="True" ContentId="FileName|Script|assets\scar\winconditions\Sacred Point Control.scar" ToolTip="E:\Source\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\winconditions\Sacred Point Control.scar" LastActivationTimeStamp="07/30/2023 22:37:27" />
+          <LayoutDocument Title="Sacred Point Control.scar" IsSelected="True" ContentId="FileName|Script|assets\scar\winconditions\Sacred Point Control.scar" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\winconditions\Sacred Point Control.scar" LastActivationTimeStamp="07/30/2023 22:09:32" />
           <LayoutDocument Title="Sacred Point Control.rdo" ContentId="Reflect|Essence.Editor.ReflectEditor.Controls.DefaultReflectControlActivator|0x4D68A0989A056F8C" LastActivationTimeStamp="07/30/2023 22:09:50" />
-          <LayoutDocument Title="Sacred Point Control.locdb" ContentId="FileName|LocDB|assets\locdb\Sacred Point Control.locdb" ToolTip="E:\Source\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\locdb\Sacred Point Control.locdb" LastActivationTimeStamp="07/30/2023 05:03:04" />
-          <LayoutDocument Title="_default.burnproj" ContentId="FileName|BurnProject|assets\_default.burnproj" ToolTip="E:\Source\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\_default.burnproj" LastActivationTimeStamp="07/30/2023 05:02:50" />
+          <LayoutDocument Title="Sacred Point Control.locdb" ContentId="FileName|LocDB|assets\locdb\Sacred Point Control.locdb" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\locdb\Sacred Point Control.locdb" LastActivationTimeStamp="07/30/2023 05:03:04" />
+          <LayoutDocument Title="_default.burnproj" ContentId="FileName|BurnProject|assets\_default.burnproj" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\_default.burnproj" LastActivationTimeStamp="07/30/2023 05:02:50" />
         </LayoutDocumentPane>
         <LayoutDocumentPane>
-          <LayoutDocument Title="sacredsites.scar" IsSelected="True" IsLastFocusedDocument="True" ContentId="FileName|Script|assets\scar\sacredsites.scar" ToolTip="E:\Source\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\sacredsites.scar" FloatingLeft="322" FloatingTop="564" FloatingWidth="1948" FloatingHeight="1004" LastActivationTimeStamp="07/30/2023 22:39:14" PreviousContainerId="608d21f1-32e0-49ed-851b-adc0bcd677a6" PreviousContainerIndex="3" />
+          <LayoutDocument Title="sacredsites.scar" IsSelected="True" IsLastFocusedDocument="True" ContentId="FileName|Script|assets\scar\sacredsites.scar" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\sacredsites.scar" FloatingLeft="322" FloatingTop="564" FloatingWidth="1948" FloatingHeight="1004" LastActivationTimeStamp="07/30/2023 22:09:32" PreviousContainerId="608d21f1-32e0-49ed-851b-adc0bcd677a6" PreviousContainerIndex="3" />
         </LayoutDocumentPane>
       </LayoutDocumentPaneGroup>
       <LayoutAnchorablePane Id="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" Name="anchorablesPane" DockHeight="332">
-        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Output" ContentId="Output" LastActivationTimeStamp="07/30/2023 04:56:12" />
-        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Error List" IsSelected="True" ContentId="ErrorList" LastActivationTimeStamp="07/30/2023 22:39:11" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Output" IsSelected="True" ContentId="Output" LastActivationTimeStamp="07/30/2023 04:56:12" />
+        <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Error List" ContentId="ErrorList" LastActivationTimeStamp="07/30/2023 22:39:11" />
         <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Object Browser" ContentId="ScenarioEditor.ObjectBrowser" LastActivationTimeStamp="07/28/2020 09:55:15" />
         <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Type Browser" ContentId="ScenarioEditor.ReflectTypeBrowser" LastActivationTimeStamp="07/30/2023 04:34:14" />
       </LayoutAnchorablePane>
@@ -44,12 +44,12 @@
   <BottomSide />
   <FloatingWindows />
   <Hidden>
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Transformation" IsSelected="True" ContentId="ScenarioEditor.Transformation" FloatingLeft="200" FloatingTop="200" FloatingWidth="250" FloatingHeight="300" LastActivationTimeStamp="07/30/2023 21:48:44" PreviousContainerId="78c06263-eb86-40c1-8abf-6d89a3781df0" PreviousContainerIndex="0" />
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Painter" IsSelected="True" ContentId="ScenarioEditor.Painter" FloatingLeft="200" FloatingTop="200" FloatingWidth="300" FloatingHeight="800" LastActivationTimeStamp="07/30/2023 21:48:44" PreviousContainerId="6973cf54-b1f0-4018-81fe-1097d6e9beaf" PreviousContainerIndex="1" />
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Spell Check" IsSelected="True" ContentId="LocDB.SpellCheck" LastActivationTimeStamp="07/30/2023 21:48:44" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="4" />
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Watch 1" ContentId="Watch1" LastActivationTimeStamp="07/30/2023 22:26:24" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="7" />
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Globals" ContentId="Globals" LastActivationTimeStamp="07/30/2023 22:26:24" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="6" />
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Locals" ContentId="Locals" LastActivationTimeStamp="07/30/2023 22:26:24" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="5" />
-    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Call Stack" ContentId="CallStack" LastActivationTimeStamp="07/30/2023 22:26:24" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="4" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Transformation" IsSelected="True" ContentId="ScenarioEditor.Transformation" FloatingLeft="200" FloatingTop="200" FloatingWidth="250" FloatingHeight="300" LastActivationTimeStamp="07/30/2023 22:09:32" PreviousContainerId="78c06263-eb86-40c1-8abf-6d89a3781df0" PreviousContainerIndex="0" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Painter" IsSelected="True" ContentId="ScenarioEditor.Painter" FloatingLeft="200" FloatingTop="200" FloatingWidth="300" FloatingHeight="800" LastActivationTimeStamp="07/30/2023 22:09:32" PreviousContainerId="6973cf54-b1f0-4018-81fe-1097d6e9beaf" PreviousContainerIndex="1" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Spell Check" IsSelected="True" ContentId="LocDB.SpellCheck" LastActivationTimeStamp="07/30/2023 22:09:32" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="4" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Watch 1" ContentId="Watch1" LastActivationTimeStamp="07/30/2023 22:11:20" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="5" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Globals" ContentId="Globals" LastActivationTimeStamp="07/30/2023 22:11:20" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="6" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Locals" ContentId="Locals" LastActivationTimeStamp="07/30/2023 22:11:20" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="5" />
+    <LayoutAnchorable AutoHideMinWidth="100" AutoHideMinHeight="100" Title="Call Stack" ContentId="CallStack" LastActivationTimeStamp="07/30/2023 22:11:20" PreviousContainerId="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" PreviousContainerIndex="4" />
   </Hidden>
 </LayoutRoot>

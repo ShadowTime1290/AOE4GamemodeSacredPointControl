@@ -229,8 +229,8 @@ function Mod_ChangeCosts()
 	
 	local buildingTypes = {
 		"building"
-	}	
-	
+	}
+
 	local unitBps = BP_GetEntityBlueprintsWithType(unitTypes)
 	local buildingBps = BP_GetEntityBlueprintsWithType(buildingTypes)
 	local siegeBps = BP_GetEntityBlueprintsWithType(siegeTypes)
@@ -246,12 +246,14 @@ function Mod_ChangeCosts()
 		elseif Table_Contains(buildingBps, unit) then
 			divide = 10
 		end
-		
+
 		local ticketCost = math.max(math.floor((totalResourceCost / divide) + 0.5), 1)
 		Modify_EntityCost(player_local.id, unit, RT_Food, 0, MUT_Set, true)
 		Modify_EntityCost(player_local.id, unit, RT_Wood, 0, MUT_Set, true)
 		Modify_EntityCost(player_local.id, unit, RT_Stone, 0, MUT_Set, true)
 		Modify_EntityCost(player_local.id, unit, RT_Gold, ticketCost, MUT_Set, true)
+
+		Modify_EntityBuildTime(player_local.id, unit, 0.1) 
 	end
 	
 	for i, upgrade in pairs(upgradeBps) do
