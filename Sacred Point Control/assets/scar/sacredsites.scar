@@ -282,7 +282,7 @@ function Religious_Tickets()
 	for j, player in pairs(PLAYERS) do
 		
 		-- Gets the number of holy sites controlled by enemies
-		local sites = Religious_EnemySitesControlled(player.id)
+		local sites = Religious_EnemySitesControlled(player)
 		
 		if sites ~= 0 then
 			local multiplier = _religious.options.ticket_multiplier
@@ -910,7 +910,7 @@ function Religious_EnemySitesControlled(player)
 			
 			-- If Holy Site is not neutral AND is owned by the enemy
 			if not World_OwnsEntity(holy_site) and Player_ObserveRelationship(player.id, site_owner.id) == R_ENEMY then
-				
+
 				-- Increment Holy Sites owned
 				sites = sites + 1
 			end

@@ -116,7 +116,10 @@ function Mod_Start()
 		
 		-- Set starting population cap to 200
 		Player_SetMaxPopulation(player.id, CT_Personnel, 200)	
-	end	
+	end
+
+	FOW_ExploreAll() 
+
 end
 
 -- Called when Core_SetPlayerDefeated() is invoked. Signals that a player has been eliminated from play due to defeat.
