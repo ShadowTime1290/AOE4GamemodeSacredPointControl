@@ -10,13 +10,13 @@
       <LayoutDocumentPaneGroup Orientation="Horizontal">
         <LayoutDocumentPane Id="608d21f1-32e0-49ed-851b-adc0bcd677a6">
           <LayoutDocument Title="mod.rdo" ContentId="Reflect|Essence.Editor.ReflectEditor.Controls.DefaultReflectControlActivator|0x247EF4B7572FC973" LastActivationTimeStamp="07/31/2023 09:54:42" />
-          <LayoutDocument Title="Sacred Point Control.scar" IsSelected="True" IsLastFocusedDocument="True" ContentId="FileName|Script|assets\scar\winconditions\Sacred Point Control.scar" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\winconditions\Sacred Point Control.scar" LastActivationTimeStamp="07/31/2023 10:36:47" />
+          <LayoutDocument Title="Sacred Point Control.scar" ContentId="FileName|Script|assets\scar\winconditions\Sacred Point Control.scar" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\winconditions\Sacred Point Control.scar" LastActivationTimeStamp="07/31/2023 10:36:47" />
           <LayoutDocument Title="Sacred Point Control.rdo" ContentId="Reflect|Essence.Editor.ReflectEditor.Controls.DefaultReflectControlActivator|0x4D68A0989A056F8C" LastActivationTimeStamp="07/31/2023 10:31:52" />
           <LayoutDocument Title="Sacred Point Control.locdb" ContentId="FileName|LocDB|assets\locdb\Sacred Point Control.locdb" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\locdb\Sacred Point Control.locdb" LastActivationTimeStamp="07/30/2023 22:49:49" />
           <LayoutDocument Title="_default.burnproj" ContentId="FileName|BurnProject|assets\_default.burnproj" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\_default.burnproj" LastActivationTimeStamp="07/30/2023 22:49:49" />
           <LayoutDocument Title="sacredsites.scar" ContentId="FileName|Script|assets\scar\sacredsites.scar" ToolTip="C:\Users\Clayton\Documents\AOE4 Game Modes\AOE4GamemodeSacredPointControl\Sacred Point Control\assets\scar\sacredsites.scar" FloatingLeft="63" FloatingTop="117" FloatingWidth="1948" FloatingHeight="1004" LastActivationTimeStamp="07/31/2023 10:31:55" />
-          <LayoutDocument Title="ebps" ContentId="Category|ebps" LastActivationTimeStamp="07/31/2023 10:27:54" />
-          <LayoutDocument Title="upgrade" ContentId="Category|upgrade" LastActivationTimeStamp="07/31/2023 10:27:57" />
+          <LayoutDocument Title="ebps" ContentId="Category|ebps" LastActivationTimeStamp="07/31/2023 10:39:04" />
+          <LayoutDocument Title="upgrade" IsSelected="True" IsLastFocusedDocument="True" ContentId="Category|upgrade" LastActivationTimeStamp="07/31/2023 10:39:07" />
         </LayoutDocumentPane>
       </LayoutDocumentPaneGroup>
       <LayoutAnchorablePane Id="1b84d0aa-3fd1-4781-909d-fa3e4b760d6d" Name="anchorablesPane" DockHeight="512">
