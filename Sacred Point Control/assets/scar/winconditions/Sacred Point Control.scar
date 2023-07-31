@@ -98,7 +98,6 @@ function Mod_OnInit()
 	for i, player in pairs(PLAYERS) do
 		Player_SetStateModelFloat(player.id,"sacred_site_gold_income_per_second",0)
 		Player_SetStateModelFloat(player.id,"relic_gold_income_per_second",0)
-		Player_SetStateModelFloat(player.id,"monk_relic_ability_warmup",0)
 	end
 end
 
@@ -114,12 +113,17 @@ function Mod_Start()
 
 		local player_civ = Player_GetRaceName(player.id)
 
-		--if player_civ == "chinese" then
-		--	Player_CompleteUpgrade(player.id,player_dynasty0_chi)
-		--	Player_CompleteUpgrade(player.id,player_dynasty1_chi)
-		--	Player_CompleteUpgrade(player.id,player_dynasty2_chi)
-		--	Player_CompleteUpgrade(player.id,player_dynasty3_chi)
-		--end
+		if player_civ == "chinese" then
+			local dynasty1 = BP_GetUpgradeBlueprint("player_dynasty1_chi")
+			local dynasty2 = BP_GetUpgradeBlueprint("player_dynasty2_chi")
+			local dynasty3 = BP_GetUpgradeBlueprint("player_dynasty3_chi")
+			Player_CompleteUpgrade(player.id, dynasty1)
+			Player_SetStateModelBool(player.id,"dynasty_1_was_completed_chi",true)
+			Player_CompleteUpgrade(player.id, dynasty2)
+			Player_SetStateModelBool(player.id,"dynasty_2_was_completed_chi",true)
+			Player_CompleteUpgrade(player.id, dynasty3)
+			Player_SetStateModelBool(player.id,"dynasty_3_was_completed_chi",true)
+		end
 		
 		-- Set player starting resources
 		-- RT stands for Resource Type
@@ -129,13 +133,15 @@ function Mod_Start()
 		Player_SetResource(player.id, RT_Stone, 0)
 		
 		-- Set starting population cap to 200
-		Player_SetMaxPopulation(player.id, CT_Personnel, 200)	
+		Player_SetMaxPopulation(player.id, CT_Personnel, 50)
 
 	end
 
 	FOW_ExploreAll() 
 
+	Mod_FindMonastery()
 
+	Rule_AddInterval(SpawnProtection,0.1)
 
 end
 
@@ -152,3 +158,58 @@ function Mod_OnGameOver()
 	
 	
 end
+
+-- This function finds the starting Town Center for all players in the match, reveals it to all other players, and increases its production speed
+function Mod_FindMonastery()
+
+    for i, player in pairs(PLAYERS) do
+        -- Get the player's entities and place them into an ENTITY GROUP
+        local eg_player_entities = Player_GetEntities(player.id)
+        
+        -- Filter out everything in the ENTITY GROUP except for the Monastery
+        EGroup_Filter(eg_player_entities, "monastery", FILTER_KEEP)
+        
+        -- Get the monastery ENTITY by getting the first entry in the ENTITY GROUP we just filtered
+        local entity =  EGroup_GetEntityAt(eg_player_entities, 1)
+        
+        -- Get the monastery's ENTITY ID
+        -- Some functions require the ENTITY ID to perform an action on the ENTITY
+        local entity_id = Entity_GetID(entity) 
+        
+        -- Get the monastery's position
+        local position = Entity_GetPosition(entity)
+        
+        -- Store the player's monastery information so it can be referenced later
+        player.monastery = {
+            entity = entity,
+            entity_id = entity_id,
+            position = position,
+        }
+        
+        -- Reveal monastery locations for the first 30 seconds of the match
+        FOW_RevealArea(player.monastery.position, 40, 30)
+    end
+end
+
+
+function SpawnProtection()
+	for i, player in pairs(PLAYERS) do
+		-- Create EGroups for atspawn and nearspawn
+		local atspawn = EGroup_CreateIfNotFound("atspawn")
+		local nearspawn = EGroup_CreateIfNotFound("nearspawn")
+
+		-- Get entities near the markers and add them to the EGroups
+		Player_GetAllEntitiesNearMarker(player.id, atspawn, player.monastery.position, 40)
+		Player_GetAllEntitiesNearMarker(player.id, nearspawn, player.monastery.position, 50)
+
+		-- Remove entities from nearspawn that are in atspawn
+		EGroup_RemoveGroup(nearspawn, atspawn)
+
+		-- Set invulnerability for the entities in atspawn
+		EGroup_SetInvulnerable(atspawn, true)
+
+		-- Remove invulnerability for the entities in nearspawn
+		EGroup_SetInvulnerable(nearspawn, false)
+	end
+end
+

@@ -253,6 +253,12 @@ function Mod_ChangeCosts()
 			local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
 			local divide = 80
 			
+			if Table_Contains(siegeBps, unit) then
+				divide = 20
+			elseif Table_Contains(buildingBps, unit) then
+				divide = 10
+			end
+
 			local ticketCost = math.max(math.floor((totalResourceCost / divide) + 0.5), 1)
 			Modify_EntityCost(player.id, unit, RT_Food, 0, MUT_Set, true)
 			Modify_EntityCost(player.id, unit, RT_Wood, 0, MUT_Set, true)
