@@ -114,12 +114,12 @@ function Mod_Start()
 
 		local player_civ = Player_GetRaceName(player.id)
 
-		if player_civ == "chinese" then
-			Player_CompleteUpgrade(player.id,player_dynasty0_chi)
-			Player_CompleteUpgrade(player.id,player_dynasty1_chi)
-			Player_CompleteUpgrade(player.id,player_dynasty2_chi)
-			Player_CompleteUpgrade(player.id,player_dynasty3_chi)
-		end
+		--if player_civ == "chinese" then
+		--	Player_CompleteUpgrade(player.id,player_dynasty0_chi)
+		--	Player_CompleteUpgrade(player.id,player_dynasty1_chi)
+		--	Player_CompleteUpgrade(player.id,player_dynasty2_chi)
+		--	Player_CompleteUpgrade(player.id,player_dynasty3_chi)
+		--end
 		
 		-- Set player starting resources
 		-- RT stands for Resource Type
