@@ -22,7 +22,6 @@ _religious = {
 	conversion_radius = 10.0,	-- Radius around holy sites within which a monk/unit must be to capture/neutralize it - must match value in Holy Site strategic_point_ext
 	update_interval = 0.125,
 	ticket_frequency = 1,
-	ticketLossMultiplier = 1,
 	time_victory = 8 * 60,		-- Countdown time to victory after all sites are captured (in seconds)	
 	timer_victory = "capture_victory_timer",
 	countdown_notifications = {	-- Points during countdown at which to update audio.   
@@ -69,8 +68,12 @@ _religious = {
 	progress = {
 		min = 0,
 		max = 1.00,
-}
-
+	},
+	options = {
+		fast_drain = true,
+		tickets = 1600,
+		ticket_multiplier = 1
+	}
 }
 
 -----------------------------------------------------------------------
@@ -237,11 +240,13 @@ function Mod_ChangeCosts()
 		local cost = Player_GetEntityBPCost(player_local.id, unit)
 		local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
 		local divide = 80
-		if table_contains(siegeBps, unit) then
+		
+		if Table_Contains(siegeBps, unit) then
 			divide = 20
-		elseif table_contains(buildingBps, unit) then
+		elseif Table_Contains(buildingBps, unit) then
 			divide = 10
 		end
+		
 		local ticketCost = math.max(math.floor((totalResourceCost / divide) + 0.5), 1)
 		Modify_EntityCost(player_local.id, unit, RT_Food, 0, MUT_Set, true)
 		Modify_EntityCost(player_local.id, unit, RT_Wood, 0, MUT_Set, true)
@@ -260,7 +265,7 @@ function Mod_ChangeCosts()
 	end
 end
 
-function table_contains(tbl, x)
+function Table_Contains(tbl, x)
     for _, v in pairs(tbl) do
         if v == x then 
             return true 
@@ -277,12 +282,20 @@ function Religious_Tickets()
 		-- Gets the number of holy sites controlled by enemies
 		local sites = Religious_EnemySitesControlled(player.id)
 		
-		local ticket_loss = sites * -1 * _religious.ticketLossMultiplier
-
-		if Player_GetResource(player_local.id, RT_Gold) <= ticket_loss then
-			Player_SetResource(player.id, RT_Gold, 0)
-		else
-			Player_AddResource(player.id, RT_Gold, resource_loss) 
+		if sites ~= 0 then
+			local multiplier = _religious.options.ticket_multiplier
+			
+			if (_religious.options.fast_drain and sites == #_religious.sites) then
+				multiplier = multiplier + 1
+			end
+			
+			local ticket_loss = sites * -1 * multiplier
+			
+			if Player_GetResource(player_local.id, RT_Gold) <= ticket_loss then
+				Player_SetResource(player.id, RT_Gold, 0)
+			else
+				Player_AddResource(player.id, RT_Gold, ticket_loss) 
+			end
 		end
 	end
 end

@@ -30,6 +30,7 @@ import("sacredsites.scar")
 -- Global data table that can be referenced in script functions (e.g. _mod.module = "Mod")
 _mod = {
 	module = "Mod",
+	options = {}
 }
 
 -- Register the win condition (Some functions can be prepended with "Mod_" to be called automatically as part of the scripting framework)
@@ -42,7 +43,42 @@ Core_RegisterModule(_mod.module)
 -- Called during load as part of the game setup sequence
 function Mod_OnGameSetup()
 	
+	Setup_GetWinConditionOptions(_mod.options)
 	
+	if _mod.options.tickets then
+		-- Fast drain
+		if _mod.options.tickets.fast_drain.enum_value == _mod.options.tickets.fast_drain.enum_items.fast_drain_enabled then
+			_religious.options.fast_drain = true
+		else
+			_religious.options.fast_drain = false
+		end
+		
+		-- Starting tickets
+		if _mod.options.tickets.starting_tickets.enum_value == 0 then--_mod.options.tickets.starting_tickets.enum_items.["800_tickets"] then
+			_religious.options.tickets = 800
+		elseif _mod.options.tickets.starting_tickets.enum_value == 1 then
+			_religious.options.tickets = 1200
+		elseif _mod.options.tickets.starting_tickets.enum_value == 2 then
+			_religious.options.tickets = 1600
+		elseif _mod.options.tickets.starting_tickets.enum_value == 3 then
+			_religious.options.tickets = 2000
+		elseif _mod.options.tickets.starting_tickets.enum_value == 4 then
+			_religious.options.tickets = 2400
+		elseif _mod.options.tickets.starting_tickets.enum_value == 5 then
+			_religious.options.tickets = 2800
+		elseif _mod.options.tickets.starting_tickets.enum_value == 6 then
+			_religious.options.tickets = 3600
+		end
+		
+		-- Ticket multi
+		if _mod.options.tickets.ticket_multiplier.enum_value == 0 then--_mod.options.tickets.ticket_multiplier.enum_items.["2x_multiplier"] then
+			_religious.options.ticket_multiplier = 1
+		elseif _mod.options.tickets.ticket_multiplier.enum_value == 1 then
+			_religious.options.ticket_multiplier = 2
+		elseif _mod.options.tickets.ticket_multiplier.enum_value == 2 then
+			_religious.options.ticket_multiplier = 3
+		end
+	end
 	
 end
 
@@ -75,7 +111,7 @@ function Mod_Start()
 		-- RT stands for Resource Type
 		Player_SetResource(player.id, RT_Food, 0)		
 		Player_SetResource(player.id, RT_Wood, 0)
-		Player_SetResource(player.id, RT_Gold, 1600)
+		Player_SetResource(player.id, RT_Gold, _religious.options.tickets)
 		Player_SetResource(player.id, RT_Stone, 0)
 		
 		-- Set starting population cap to 200
