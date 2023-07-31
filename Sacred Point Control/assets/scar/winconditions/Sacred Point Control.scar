@@ -109,10 +109,10 @@ function Mod_Start()
 		
 		-- Set player starting resources
 		-- RT stands for Resource Type
-		Player_SetResource(player.id, RT_Food, 0)		
-		Player_SetResource(player.id, RT_Wood, 0)
-		Player_SetResource(player.id, RT_Gold, _religious.options.tickets)
-		Player_SetResource(player.id, RT_Stone, 0)
+		Player_SetResource(player.id, RT_Food, 1000)		
+		Player_SetResource(player.id, RT_Wood, 1000)
+		Player_SetResource(player.id, RT_Gold, 200)
+		Player_SetResource(player.id, RT_Stone, 1000)
 		
 		-- Set starting population cap to 200
 		Player_SetMaxPopulation(player.id, CT_Personnel, 200)	

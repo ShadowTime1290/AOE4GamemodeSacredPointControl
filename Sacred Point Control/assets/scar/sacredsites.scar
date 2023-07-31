@@ -128,7 +128,7 @@ function Religious_OnInit()
 		-- Initialize replay stats
 		ReplayStatViewer_PopulateReplayStatTabs({"ReligiousTrackerTemplate"})
 		ReplayStatViewer_RegisterPlayerDataContextUpdater(Religious_UpdatePlayerStats)
-		Mod_ChangeCosts()
+		--Mod_ChangeCosts()
 		Mod_RemoveGold()
 	end
 end
@@ -292,11 +292,18 @@ function Religious_Tickets()
 			end
 			
 			local ticket_loss = sites * -1 * multiplier
-			
-			if Player_GetResource(player_local.id, RT_Gold) <= ticket_loss then
-				Player_SetResource(player.id, RT_Gold, 0)
+			local currentTickets = Player_GetResource(player_local.id, RT_Gold)
+
+			if currentTickets == 0 then
+				print("O tickets left")
+			elseif currentTickets + ticket_loss <= 0 then
+				print("Tickets less than loss")
+				Player_AddResource(player.id, RT_Gold, (currentTickets * -1))
+				print("Set tickets to 0")
 			else
+				print("Removing tickets " .. ticket_loss)
 				Player_AddResource(player.id, RT_Gold, ticket_loss) 
+				print("Removed tickets")
 			end
 		end
 	end
