@@ -282,10 +282,12 @@ function Religious_Tickets()
 	-- For every player
 	for j, player in pairs(PLAYERS) do
 		
+		-- Get the current tickets/gold for each
 		local currentTickets = Player_GetResource(player_local.id, RT_Gold)
 		tonumber(currentTickets)
 
-		if currentTickets == 0 then
+		-- If the current number of tickets for player is 0 then skip the rest of the function
+		if currentTickets == 0 or currentTickets == nil then
 			print("No tickets left!")
 		else
 			-- Gets the number of holy sites controlled by enemies
