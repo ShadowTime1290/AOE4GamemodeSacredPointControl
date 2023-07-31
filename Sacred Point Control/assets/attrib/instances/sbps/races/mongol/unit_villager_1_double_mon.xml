@@ -1,0 +1,177 @@
+<instance version="4" override_type="merge" description="Mongol Villager" template="sbps">
+	<list name="extensions" overrideParent="True">
+		<template_reference name="squadexts" value="sbpextensions\squad_engineer_ext" overrideParent="True" List.ItemID="1832012376" List.ParentItemID="851310113">
+			<float name="construction_rate_multiplier" value="1" />
+			<list name="construction_groups" overrideParent="True">
+				<group name="construction_group" comment="Age 1" List.ItemID="1706421282">
+					<instance_reference name="construction_menu" value="menu\mon_age1" />
+					<list name="construction_items" overrideParent="True">
+						<group name="construction_item" comment="Stable" List.ItemID="-2141421742">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_cavalry_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="2" overrideParent="True" />
+								<int name="ui_position_column" value="2" overrideParent="True" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_cavalry_moving_mon" overrideParent="True" List.ItemID="1571773487" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+						<group name="construction_item" comment="Outpost" List.ItemID="1296897166">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_defense_outpost_mon" overrideParent="True" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="3" overrideParent="True" />
+								<int name="ui_position_column" value="3" overrideParent="True" />
+							</group>
+							<list name="associated_ebps">
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+						<group name="construction_item" comment="Barracks" List.ItemID="153460438">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_infantry_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="2" overrideParent="True" />
+								<int name="ui_position_column" value="3" overrideParent="True" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_infantry_moving_mon" overrideParent="True" List.ItemID="-871213286" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+					</list>
+					<enum name="construction_type" value="tp_construction_base" />
+				</group>
+				<group name="construction_group" comment="Age 2" List.ItemID="-326173261">
+					<instance_reference name="construction_menu" value="menu\mon_age2" />
+					<list name="construction_items" overrideParent="True">
+						<group name="construction_item" comment="Blacksmith (Infantry research)" List.ItemID="1994766379">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_tech_unit_infantry_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="1" />
+								<int name="ui_position_column" value="1" overrideParent="True" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_tech_unit_infantry_moving_mon" overrideParent="True" List.ItemID="1654735079" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+						<group name="construction_item" comment="Archery Range" List.ItemID="1582984283">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_ranged_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="2" />
+								<int name="ui_position_column" value="1" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_ranged_moving_mon" overrideParent="True" List.ItemID="1179516436" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+						<group name="construction_item" comment="Dock" List.ItemID="662153642">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_naval_mon" overrideParent="True" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="2" overrideParent="True" />
+								<int name="ui_position_column" value="3" overrideParent="True" />
+							</group>
+							<list name="associated_ebps">
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+					</list>
+					<enum name="construction_type" value="tp_construction_base" />
+				</group>
+				<group name="construction_group" comment="Age 3" List.ItemID="382257684">
+					<instance_reference name="construction_menu" value="menu\mon_age3" />
+					<list name="construction_items" overrideParent="True">
+						<group name="construction_item" comment="Monastery" List.ItemID="1829452975">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_religious_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="1" overrideParent="True" />
+								<int name="ui_position_column" value="2" overrideParent="True" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_religious_moving_mon" overrideParent="True" List.ItemID="-1373066057" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+						<group name="construction_item" comment="Siege Workshop" List.ItemID="-329480542">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_siege_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="2" />
+								<int name="ui_position_column" value="1" overrideParent="True" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_unit_siege_moving_mon" overrideParent="True" List.ItemID="-1282957594" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+						<group name="construction_item" comment="Bowyer (Archery research)" List.ItemID="-1080620303">
+							<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_tech_unit_ranged_mon" />
+							<group name="ui_position">
+								<int name="ui_position_row" value="1" />
+								<int name="ui_position_column" value="1" overrideParent="True" />
+							</group>
+							<list name="associated_ebps" overrideParent="True">
+								<instance_reference name="ebp" value="ebps\races\mongol\buildings\building_tech_unit_ranged_moving_mon" overrideParent="True" List.ItemID="612952594" />
+							</list>
+							<instance_reference name="hotkey_binding" value="" />
+							<list name="alternate_ebps">
+							</list>
+							<list name="additional_requirements">
+							</list>
+							<state_tree_node name="additional_requirement_statetree" value="" />
+						</group>
+					</list>
+					<enum name="construction_type" value="tp_construction_base" />
+				</group>
+				<group name="construction_group" comment="Imperial Age" List.ItemID="-1977464402">
+					<instance_reference name="construction_menu" value="menu\mon_age4" overrideParent="True" />
+					<list name="construction_items" overrideParent="True">
+					</list>
+					<enum name="construction_type" value="tp_construction_base" />
+				</group>
+			</list>
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="172807" />
+	<instance_reference name="parent_pbg" value="sbps\races\mongol\unit_villager_1_mon" />
+</instance>

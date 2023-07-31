@@ -21,9 +21,9 @@ _religious = {
 	module = "Religious",		-- Module name
 	last_person_standing = false,	-- true = fixed teams, false = dynamic diplomacy (i.e. only 1 player can win)
 	conversion_radius = 10.0,	-- Radius around holy sites within which a monk/unit must be to capture/neutralize it - must match value in Holy Site strategic_point_ext
-	update_interval = 0.125,
-	ticket_frequency = 1,
-	time_victory = 8 * 60,		-- Countdown time to victory after all sites are captured (in seconds)	
+	update_interval = 0.125,	
+	ticket_frequency = 1,		-- How often tickets are taken from players
+	time_victory = 2 * 60,		-- Countdown time to victory after all sites are captured (in seconds)	
 	timer_victory = "capture_victory_timer",
 	countdown_notifications = {	-- Points during countdown at which to update audio.   
 		{ time = 3 * 60 },		-- Arrange in decreasing order since music intensity increases when the last one triggers
@@ -129,7 +129,7 @@ function Religious_OnInit()
 		-- Initialize replay stats
 		ReplayStatViewer_PopulateReplayStatTabs({"ReligiousTrackerTemplate"})
 		ReplayStatViewer_RegisterPlayerDataContextUpdater(Religious_UpdatePlayerStats)
-		--Mod_ChangeCosts()
+		Mod_ChangeCosts()
 		Mod_RemoveGold()
 	end
 end
@@ -197,77 +197,91 @@ end
 -- Rules
 -----------------------------------------------------------------------
 
+--Removes any gold deposits on the start of the game
 function Mod_RemoveGold()
 	gold_deposits = EGroup_CreateIfNotFound("gold_deposits")
 	
+	--Gets all the the gold deposits in the world
 	World_GetAllEntitiesOfType(gold_deposits, "gold")
 
+	-- Goes through all of the gold deposits and destroys them
 	for i = 1, EGroup_CountSpawned(gold_deposits) do
 		local entityId = Entity_GetID(EGroup_GetSpawnedEntityAt(gold_deposits, i))
 		local entity = EGroup_GetSpawnedEntityAt(gold_deposits, i)
-		
+
 		Entity_Destroy(entity)
 	end	
 	
 end
 
+-- Changes the costs of units and upgrades. Does a resource to ticket calculation by adding Food, Wood, Gold and Stone costs and does some
+-- math to determine "ticket" cost.
 function Mod_ChangeCosts()
-	local unitTypes = {
-		"military",
-		"worker",
-		"naval_unit",
-		"building"
-	}
-	 
-	local upgradeTypes = {
-		"military_upgrade",
-		"economic_upgrade"	
-	}
-	
-	local siegeTypes = {
-		"siege"
-	}	
-	
-	local buildingTypes = {
-		"building"
-	}
 
-	local unitBps = BP_GetEntityBlueprintsWithType(unitTypes)
-	local buildingBps = BP_GetEntityBlueprintsWithType(buildingTypes)
-	local siegeBps = BP_GetEntityBlueprintsWithType(siegeTypes)
-	local upgradeBps = BP_GetUpgradesMatchingTypes(upgradeTypes)
-	
-	for i, unit in pairs(unitBps) do
-		local cost = Player_GetEntityBPCost(player_local.id, unit)
-		local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
-		local divide = 80
-		
-		if Table_Contains(siegeBps, unit) then
-			divide = 20
-		elseif Table_Contains(buildingBps, unit) then
-			divide = 10
+	for j, player in pairs(PLAYERS) do
+
+		--These are blueprint types so that we can search them and hopefully get every single blueprint from just a few searches rather than individually.
+		local unitTypes = {
+			"military",
+			"worker",
+			"naval_unit",
+			"building"
+		}
+
+		local upgradeTypes = {
+			"military_upgrade",
+			"economic_upgrade"	
+		}
+
+		local siegeTypes = {
+			"siege"
+		}	
+
+		local buildingTypes = {
+			"building"
+		}
+
+		local unitBps = BP_GetEntityBlueprintsWithType(unitTypes)
+		local buildingBps = BP_GetEntityBlueprintsWithType(buildingTypes)
+		local siegeBps = BP_GetEntityBlueprintsWithType(siegeTypes)
+		local upgradeBps = BP_GetUpgradesMatchingTypes(upgradeTypes)
+
+		-- Looking up the resource and time cost for each blueprint and performing calculations on them to achieve a ticket cost.
+
+		--Unit cost to tickets
+		for i, unit in pairs(unitBps) do
+			local cost = Player_GetEntityBPCost(player.id, unit)
+
+			local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
+			local divide = 80
+			
+			local ticketCost = math.max(math.floor((totalResourceCost / divide) + 0.5), 1)
+			Modify_EntityCost(player.id, unit, RT_Food, 0, MUT_Set, true)
+			Modify_EntityCost(player.id, unit, RT_Wood, 0, MUT_Set, true)
+			Modify_EntityCost(player.id, unit, RT_Stone, 0, MUT_Set, true)
+			Modify_EntityCost(player.id, unit, RT_Gold, ticketCost, MUT_Set, true)
+
+			Modify_EntityBuildTime(player.id, unit, 0.1) 
 		end
 
-		local ticketCost = math.max(math.floor((totalResourceCost / divide) + 0.5), 1)
-		Modify_EntityCost(player_local.id, unit, RT_Food, 0, MUT_Set, true)
-		Modify_EntityCost(player_local.id, unit, RT_Wood, 0, MUT_Set, true)
-		Modify_EntityCost(player_local.id, unit, RT_Stone, 0, MUT_Set, true)
-		Modify_EntityCost(player_local.id, unit, RT_Gold, ticketCost, MUT_Set, true)
+		--Blueprint cost to tickets
+		for i, upgrade in pairs(upgradeBps) do
+			local cost = Player_GetUpgradeBPCost(player.id, upgrade)
 
-		Modify_EntityBuildTime(player_local.id, unit, 0.1) 
-	end
-	
-	for i, upgrade in pairs(upgradeBps) do
-		local cost = Player_GetUpgradeBPCost(player_local.id, upgrade)
-		local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
-		local ticketCost = math.max(math.floor((totalResourceCost / 40) + 0.5), 1)
-		Modify_UpgradeCost(player_local.id, upgrade, RT_Food, 0, MUT_Set, true)
-		Modify_UpgradeCost(player_local.id, upgrade, RT_Wood, 0, MUT_Set, true)
-		Modify_UpgradeCost(player_local.id, upgrade, RT_Stone, 0, MUT_Set, true)
-		Modify_UpgradeCost(player_local.id, upgrade, RT_Gold, ticketCost, MUT_Set, true)
+			local totalResourceCost = cost.food + cost.wood + (cost.stone * .5) + cost.gold
+			local ticketCost = math.max(math.floor((totalResourceCost / 40) + 0.5), 1)
+			
+			Modify_UpgradeCost(player.id, upgrade, RT_Food, 0, MUT_Set, true)
+			Modify_UpgradeCost(player.id, upgrade, RT_Wood, 0, MUT_Set, true)
+			Modify_UpgradeCost(player.id, upgrade, RT_Stone, 0, MUT_Set, true)
+			Modify_UpgradeCost(player.id, upgrade, RT_Gold, ticketCost, MUT_Set, true)
+
+			Modify_UpgradeBuildTime(player.id, upgrade, 0.25)
+		end
 	end
 end
 
+--Table function for the Mod_CostChanges function so we can extract subsets of types from the blueprint search
 function Table_Contains(tbl, x)
     for _, v in pairs(tbl) do
         if v == x then 
@@ -277,22 +291,25 @@ function Table_Contains(tbl, x)
     return false
 end
 
+
+--Ticket loss function that removes tickets based on what the sacred site control balance is.
 function Religious_Tickets()
 
 	-- For every player
 	for j, player in pairs(PLAYERS) do
 		
 		-- Get the current tickets/gold for each
-		local currentTickets = Player_GetResource(player_local.id, RT_Gold)
+		local currentTickets = Player_GetResource(player.id, RT_Gold)
 		tonumber(currentTickets)
 
 		-- If the current number of tickets for player is 0 then skip the rest of the function
-		if currentTickets == 0 or currentTickets == nil then
+		if currentTickets <= 0 or currentTickets == nil then
 			print("No tickets left!")
 		else
 			-- Gets the number of holy sites controlled by enemies
 			local sites = Religious_EnemySitesControlled(player)
 
+			--If the number of holu sites controlled by the enemy is not zero then perform ticket loss calculation
 			if sites ~= 0 then
 				local multiplier = _religious.options.ticket_multiplier
 
