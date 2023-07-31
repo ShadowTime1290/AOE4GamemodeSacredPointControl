@@ -218,35 +218,33 @@ end
 -- math to determine "ticket" cost.
 function Mod_ChangeCosts()
 
+	--These are blueprint types so that we can search them and get every single blueprint from just a few searches rather than individually.
+	local unitTypes = {
+		"military",
+		"worker",
+		"naval_unit",
+		"building"
+	}
+	
+	local upgradeTypes = {
+		"military_upgrade",
+		"economic_upgrade"	
+	}
+
+	local siegeTypes = {
+		"siege"
+	}	
+
+	local buildingTypes = {
+		"building"
+	}
+
+	local unitBps = BP_GetEntityBlueprintsWithType(unitTypes)
+	local buildingBps = BP_GetEntityBlueprintsWithType(buildingTypes)
+	local siegeBps = BP_GetEntityBlueprintsWithType(siegeTypes)
+	local upgradeBps = BP_GetUpgradesMatchingTypes(upgradeTypes)
+
 	for j, player in pairs(PLAYERS) do
-
-		--These are blueprint types so that we can search them and hopefully get every single blueprint from just a few searches rather than individually.
-		local unitTypes = {
-			"military",
-			"worker",
-			"naval_unit",
-			"building"
-		}
-
-		local upgradeTypes = {
-			"military_upgrade",
-			"economic_upgrade"	
-		}
-
-		local siegeTypes = {
-			"siege"
-		}	
-
-		local buildingTypes = {
-			"building"
-		}
-
-		local unitBps = BP_GetEntityBlueprintsWithType(unitTypes)
-		local buildingBps = BP_GetEntityBlueprintsWithType(buildingTypes)
-		local siegeBps = BP_GetEntityBlueprintsWithType(siegeTypes)
-		local upgradeBps = BP_GetUpgradesMatchingTypes(upgradeTypes)
-
-		-- Looking up the resource and time cost for each blueprint and performing calculations on them to achieve a ticket cost.
 
 		--Unit cost to tickets
 		for i, unit in pairs(unitBps) do
@@ -276,7 +274,7 @@ function Mod_ChangeCosts()
 			Modify_UpgradeCost(player.id, upgrade, RT_Stone, 0, MUT_Set, true)
 			Modify_UpgradeCost(player.id, upgrade, RT_Gold, ticketCost, MUT_Set, true)
 
-			Modify_UpgradeBuildTime(player.id, upgrade, 0.25)
+			Modify_UpgradeBuildTime(player.id, upgrade, 4)
 		end
 	end
 end
