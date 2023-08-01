@@ -23,6 +23,8 @@ import("gameplay/currentageui.scar")
 -- Import Custom Scripts
 import("sacredsites.scar")
 
+import("helpers/EntityHelper.scar")
+
 -----------------------------------------------------------------------
 -- Data
 -----------------------------------------------------------------------
@@ -141,6 +143,8 @@ function Mod_Start()
 
 	Mod_FindMonastery()
 
+	Mod_CreateOutposts()
+
 	Rule_AddInterval(SpawnProtection,0.1)
 
 end
@@ -191,6 +195,62 @@ function Mod_FindMonastery()
     end
 end
 
+function Mod_CreateOutposts()
+	for _, player in pairs(PLAYERS) do
+		local outpost_blueprint = EH_GetCivilizationEntity(player.raceName, EH_BP_OUTPOST)
+		local spawn_position = player.monastery.position
+		Mod_CreateOutpostsAroundPosition(player, outpost_blueprint, spawn_position)
+	end	
+end
+
+function Mod_CreateOutpostsAroundPosition(player, outpost_bp, center_position)
+	local midpoint = GetPositionOnCircle(40, 45)
+	
+	local positions = {
+		Top = { x = 40, z = 0 },
+		Left = { x = 0, z = 40 },
+		Right = { x = 0, z = -40 },
+		Bottom = { x = -40, z = 0 },
+		TopLeft = { x = midpoint, z = midpoint },
+		TopRight = { x = midpoint, z = midpoint * -1 },
+		BottomLeft = { x = midpoint * -1, z = midpoint },
+		BottomRight = { x = midpoint * -1, z = midpoint * -1 }
+	}
+	
+	local placeOutpost = function(offset)
+		local start_at = World_Pos(0, 0, 0)
+		
+		start_at = GetPositionWithOffset(center_position, offset)
+		LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, outpost_bp, start_at, start_at, false, false)
+	end
+	
+	local construct = function(gid, idx, eid)
+		Entity_ForceSelfConstruct(eid)
+	end
+	
+	for _, position in pairs(positions) do
+		placeOutpost(position)
+	end
+	
+	local walls = Player_GetEntitiesFromType(player.id, EH_BP_OUTPOST)
+	EGroup_ForEach(walls, construct)
+end
+
+function GetPositionWithOffset(center, offset)
+	local x_str = center.x + offset.x
+	local z_str = center.z + offset.z
+	return World_Pos(x_str, World_GetHeightAt(x_str, z_str), z_str)
+end
+
+function GetPositionOnCircle(radius, degree)  
+    -- Calculate the x-coordinate
+    local x = radius * math.sqrt(2) / 2
+    
+    -- Calculate the y-coordinate
+    local y = radius * math.sqrt(2) / 2
+    
+    return x, y
+end
 
 function SpawnProtection()
 	for i, player in pairs(PLAYERS) do
