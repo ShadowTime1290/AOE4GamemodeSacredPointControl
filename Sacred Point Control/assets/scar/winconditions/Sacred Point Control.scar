@@ -220,3 +220,8 @@ function SpawnProtection()
 	end
 end
 
+function BuildOutpostsAroundSpawn()
+
+	
+
+end
