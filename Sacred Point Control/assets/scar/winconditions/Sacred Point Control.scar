@@ -194,22 +194,29 @@ end
 
 function SpawnProtection()
 	for i, player in pairs(PLAYERS) do
-		-- Create EGroups for atspawn and nearspawn
-		local atspawn = EGroup_CreateIfNotFound("atspawn")
-		local nearspawn = EGroup_CreateIfNotFound("nearspawn")
+		-- Create EGroups\SGroups for atspawn and nearspawn
+		local eg_atspawn = EGroup_CreateIfNotFound("eg_atspawn")
+		local eg_nearspawn = EGroup_CreateIfNotFound("eg_nearspawn")
+		local sg_atspawn = SGroup_CreateIfNotFound("sg_atspawn")
+		local sg_nearspawn = SGroup_CreateIfNotFound("sg_nearspawn")
 
-		-- Get entities near the markers and add them to the EGroups
-		Player_GetAllEntitiesNearMarker(player.id, atspawn, player.monastery.position, 40)
-		Player_GetAllEntitiesNearMarker(player.id, nearspawn, player.monastery.position, 50)
+		-- Get entities\squads near the markers and add them to the EGroups\SGroups
+		Player_GetAllEntitiesNearMarker(player.id, eg_atspawn, player.monastery.position, 40)
+		Player_GetAllEntitiesNearMarker(player.id, eg_nearspawn, player.monastery.position, 50)
+		Player_GetAllSquadsNearMarker(player.id, sg_atspawn, player.monastery.position, 40)
+		Player_GetAllSquadsNearMarker(player.id, sg_nearspawn, player.monastery.position, 50)
 
-		-- Remove entities from nearspawn that are in atspawn
-		EGroup_RemoveGroup(nearspawn, atspawn)
+		-- Remove entities\squads from nearspawn that are in atspawn
+		EGroup_RemoveGroup(eg_nearspawn, eg_atspawn)
+		SGroup_RemoveGroup(sg_nearspawn, sg_atspawn)
 
 		-- Set invulnerability for the entities in atspawn
-		EGroup_SetInvulnerable(atspawn, true)
+		EGroup_SetInvulnerable(eg_atspawn, true)
+		SGroup_SetInvulnerable(sg_atspawn, true)
 
 		-- Remove invulnerability for the entities in nearspawn
-		EGroup_SetInvulnerable(nearspawn, false)
+		EGroup_SetInvulnerable(eg_nearspawn, false)
+		SGroup_SetInvulnerable(sg_nearspawn, false)
 	end
 end
 

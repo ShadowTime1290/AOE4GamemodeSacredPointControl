@@ -313,7 +313,7 @@ function Religious_Tickets()
 			-- Gets the number of holy sites controlled by enemies
 			local sites = Religious_EnemySitesControlled(player)
 
-			--If the number of holu sites controlled by the enemy is not zero then perform ticket loss calculation
+			--If the number of holy sites controlled by the enemy is not zero then perform ticket loss calculation
 			if sites ~= 0 then
 				local multiplier = _religious.options.ticket_multiplier
 
