@@ -309,7 +309,7 @@ function Religious_Tickets()
 		-- Get the current tickets/gold for each
 		local currentTickets = Player_GetResource(player.id, RT_Gold)
 		
-		if currentTicket == 0 then
+		if currentTickets == 0 then
 			Religious_EndGame(player)
 			break
 		end
