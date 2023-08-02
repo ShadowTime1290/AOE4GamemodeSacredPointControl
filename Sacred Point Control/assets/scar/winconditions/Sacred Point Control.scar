@@ -141,7 +141,7 @@ function Mod_Start()
 
 	Mod_FindMonastery()
 
-	Mod_CreateOutposts()
+	Mod_CreateOutposts(10)
 
 	Mod_CreateProductionBuildings()
 
@@ -235,30 +235,17 @@ end
 
 
 
-
-
-
 function Mod_CreateOutposts()
 	for _, player in pairs(PLAYERS) do
 		local outpost_blueprint = EH_GetCivilizationEntity(player.raceName, EH_BP_OUTPOST)
 		local spawn_position = player.monastery.position
-		Mod_CreateOutpostsAroundPosition(player, outpost_blueprint, spawn_position)
+		Mod_CreateOutpostsAroundPosition(player, outpost_blueprint, spawn_position, angle)
 	end	
 end
 
-function Mod_CreateOutpostsAroundPosition(player, outpost_bp, center_position)
-	local midpoint = GetPositionOnCircle(40, 45)
-	
-	local positions = {
-		Top = { x = 40, z = 0 },
-		Left = { x = 0, z = 40 },
-		Right = { x = 0, z = -40 },
-		Bottom = { x = -40, z = 0 },
-		TopLeft = { x = midpoint, z = midpoint },
-		TopRight = { x = midpoint, z = midpoint * -1 },
-		BottomLeft = { x = midpoint * -1, z = midpoint },
-		BottomRight = { x = midpoint * -1, z = midpoint * -1 }
-	}
+function Mod_CreateOutpostsAroundPosition(player, outpost_bp, center_position, angle)
+	local radius = 40
+	local degrees = 360 / angle
 	
 	local placeOutpost = function(offset)
 		local start_at = World_Pos(0, 0, 0)
@@ -271,10 +258,12 @@ function Mod_CreateOutpostsAroundPosition(player, outpost_bp, center_position)
 		Entity_ForceSelfConstruct(eid)
 	end
 	
-	for _, position in pairs(positions) do
+	for i = 0, degrees do
+		local position = GetPositionOnCircle(radius, i * angle)
+		
 		placeOutpost(position)
 	end
-	
+
 	local walls = Player_GetEntitiesFromType(player.id, EH_BP_OUTPOST)
 	EGroup_ForEach(walls, construct)
 end
@@ -285,14 +274,14 @@ function GetPositionWithOffset(center, offset)
 	return World_Pos(x_str, World_GetHeightAt(x_str, z_str), z_str)
 end
 
-function GetPositionOnCircle(radius, degree)  
-    -- Calculate the x-coordinate
-    local x = radius * math.sqrt(2) / 2
+function GetPositionOnCircle(radius, degree)
+	
+	local position = {
+		x = radius * math.cos(degree),
+		z = radius * math.sin(degree)
+	}
     
-    -- Calculate the y-coordinate
-    local y = radius * math.sqrt(2) / 2
-    
-    return x, y
+	return position
 end
 
 function SpawnProtection()
