@@ -96,21 +96,6 @@
 							</list>
 							<state_tree_node name="additional_requirement_statetree" value="" />
 						</group>
-						<group name="construction_item" comment="Military School" List.ItemID="-230515190">
-							<instance_reference name="ebp" value="ebps\races\ottoman\buildings\building_military_school_ott" overrideParent="True" />
-							<group name="ui_position">
-								<int name="ui_position_row" value="2" />
-								<int name="ui_position_column" value="4" overrideParent="True" />
-							</group>
-							<list name="associated_ebps">
-							</list>
-							<list name="alternate_ebps">
-							</list>
-							<instance_reference name="hotkey_binding" value="hotkeys\hotkey_binding\villager_build_menu\age_1\build_military_school_ott" overrideParent="True" />
-							<list name="additional_requirements">
-							</list>
-							<state_tree_node name="additional_requirement_statetree" value="" />
-						</group>
 					</list>
 					<enum name="construction_type" value="tp_construction_base" />
 				</group>

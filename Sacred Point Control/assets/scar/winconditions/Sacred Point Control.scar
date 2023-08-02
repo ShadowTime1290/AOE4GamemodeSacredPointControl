@@ -94,8 +94,6 @@ end
 
 -- Called on match initialization before handing control to the player
 function Mod_OnInit()
-	
-	Resources_Disable()
 
 	for i, player in pairs(PLAYERS) do
 		Player_SetStateModelFloat(player.id,"sacred_site_gold_income_per_second",0)
@@ -144,6 +142,8 @@ function Mod_Start()
 	Mod_FindMonastery()
 
 	Mod_CreateOutposts()
+
+	Mod_CreateProductionBuildings()
 
 	Rule_AddInterval(SpawnProtection,0.1)
 
@@ -194,6 +194,61 @@ function Mod_FindMonastery()
         FOW_RevealArea(player.monastery.position, 40, 30)
     end
 end
+
+function Mod_CreateProductionBuildings()
+    for _, player in pairs(PLAYERS) do
+        local spawn_position = player.monastery.position
+
+        -- Calculate the positions around the spawn_position in a circle with a radius of 20
+        local positions = {}
+        local num_buildings = 6 -- The number of buildings you want to create (in this case, 6)
+
+        for i = 1, num_buildings do
+            local angle = math.rad((360 / num_buildings) * i)
+            local x_offset = 20 * math.cos(angle)
+            local z_offset = 20 * math.sin(angle)
+            local position = {
+                x = spawn_position.x + x_offset,
+                z = spawn_position.z + z_offset
+            }
+            table.insert(positions, position)
+        end
+
+        -- Place one building of each type at the calculated positions
+        for i, position in ipairs(positions) do
+            local blueprintType
+
+            if i == 1 then
+                blueprintType = EH_BP_BARRACKS
+            elseif i == 2 then
+                blueprintType = EH_BP_ARCHERY_RANGE
+            elseif i == 3 then
+                blueprintType = EH_BP_STABLE
+            elseif i == 4 then
+                blueprintType = EH_BP_WORKSHOP
+            elseif i == 5 then
+                blueprintType = EH_BP_BLACKSMITH
+            elseif i == 6 then
+                blueprintType = EH_BP_KEEP
+            end
+
+            local blueprint = EH_GetCivilizationEntity(player.raceName, blueprintType)
+            local scar_position = World_Pos(position.x, World_GetHeightAt(position.x, position.z), position.z)
+
+            if blueprint then
+                LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, blueprint, scar_position, scar_position, false, false)
+                
+                -- Perform additional actions for each building
+                local buildingsOfType = Player_GetEntitiesFromType(player.id, blueprintType)
+                EGroup_ForEach(buildingsOfType, construct)
+            end
+        end
+    end
+end
+
+
+
+
 
 function Mod_CreateOutposts()
 	for _, player in pairs(PLAYERS) do
