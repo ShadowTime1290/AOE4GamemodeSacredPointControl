@@ -202,7 +202,7 @@ function Mod_RemoveGold()
 	gold_deposits = EGroup_CreateIfNotFound("gold_deposits")
 	
 	--Gets all the the gold deposits in the world
-	World_GetAllEntitiesOfType(gold_deposits, "gold")
+	World_GetAllEntitiesOfType(gold_deposits, "resource")
 
 	-- Goes through all of the gold deposits and destroys them
 	for i = 1, EGroup_CountSpawned(gold_deposits) do
