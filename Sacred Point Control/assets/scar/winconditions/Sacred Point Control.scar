@@ -141,9 +141,11 @@ function Mod_Start()
 
 	Mod_FindMonastery()
 
-	Mod_CreateOutposts(10)
-
-	Mod_CreateProductionBuildings()
+	--Mod_CreateOutposts(10)
+	for _, player in pairs(PLAYERS) do
+		Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_BARRACKS, EH_BP_ARCHERY_RANGE, EH_BP_STABLE, EH_BP_WORKSHOP, EH_BP_BLACKSMITH}, player.monastery.position, 20)
+		Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_OUTPOST}, player.monastery.position, 40, 15)
+	end
 
 	Rule_AddInterval(SpawnProtection,0.1)
 
@@ -195,44 +197,36 @@ function Mod_FindMonastery()
     end
 end
 
-function Mod_CreateProductionBuildings()
-    for _, player in pairs(PLAYERS) do
-        local blueprints = {
-            EH_GetCivilizationEntity(player.raceName, EH_BP_BARRACKS),
-            EH_GetCivilizationEntity(player.raceName, EH_BP_ARCHERY_RANGE),
-            EH_GetCivilizationEntity(player.raceName, EH_BP_STABLE),
-            EH_GetCivilizationEntity(player.raceName, EH_BP_WORKSHOP),
-            EH_GetCivilizationEntity(player.raceName, EH_BP_BLACKSMITH),
-            EH_GetCivilizationEntity(player.raceName, EH_BP_KEEP)
+function Mod_ConstructBuildingsInRadiusAroundPoint(player, buildingBps, centerpoint, radius, num_buildings)
+    num_buildings = num_buildings or #buildingBps
+
+    for i = 1, num_buildings do
+        local angle = math.rad((360 / num_buildings) * i)
+        local x_offset = radius * math.cos(angle)
+        local z_offset = radius * math.sin(angle)
+        local position = {
+            x = centerpoint.x + x_offset,
+            z = centerpoint.z + z_offset
         }
 
-        local spawn_position = player.monastery.position
+        -- Handling index wrap-around for buildingBps
+		local j = (i - 1) % #buildingBps + 1
 
-        -- Calculate the positions around the spawn_position in a circle with a radius of 20
-        local positions = {}
-        local num_buildings = 6 -- The number of buildings you want to create (in this case, 6)
+        local playerrace = Player_GetRaceName(player.id)
+        local buildingBp = buildingBps[j]
+        local blueprint = EH_GetCivilizationEntity(playerrace, buildingBp)
+        local scar_position = World_Pos(position.x, World_GetHeightAt(position.x, position.z), position.z)
 
-        for i = 1, num_buildings do
-            local angle = math.rad((360 / num_buildings) * i)
-            local x_offset = 20 * math.cos(angle)
-            local z_offset = 20 * math.sin(angle)
-            local position = {
-                x = spawn_position.x + x_offset,
-                z = spawn_position.z + z_offset
-            }
-            table.insert(positions, position)
-        end
-
-        -- Place one building of each type at the calculated positions
-        for i, position in ipairs(positions) do
-            if blueprints[i] then
-                local scar_position = World_Pos(position.x, World_GetHeightAt(position.x, position.z), position.z)
-                LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, blueprints[i], scar_position, scar_position, false, false)
+        if blueprint then
+            LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, blueprint, scar_position, scar_position, false, false)
+            local placed = Player_GetEntitiesFromType(player.id, buildingBp)
+            local construct = function(gid, idx, eid)
+                Entity_ForceSelfConstruct(eid)
             end
+            EGroup_ForEach(placed, construct)
         end
     end
 end
-
 
 
 function Mod_CreateOutposts()
@@ -310,10 +304,4 @@ function SpawnProtection()
 		EGroup_SetInvulnerable(eg_nearspawn, false)
 		SGroup_SetInvulnerable(sg_nearspawn, false)
 	end
-end
-
-function BuildOutpostsAroundSpawn()
-
-	
-
 end

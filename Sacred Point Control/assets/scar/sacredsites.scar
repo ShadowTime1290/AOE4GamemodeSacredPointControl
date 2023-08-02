@@ -280,7 +280,11 @@ function Mod_ChangeCosts()
 			Modify_UpgradeCost(player.id, upgrade, RT_Stone, 0, MUT_Set, true)
 			Modify_UpgradeCost(player.id, upgrade, RT_Gold, ticketCost, MUT_Set, true)
 
-			Modify_UpgradeBuildTime(player.id, upgrade, 4)
+			if player.raceName == "sultanate" then
+				Modify_UpgradeBuildTime(player.id, upgrade, 10)
+			else
+				Modify_UpgradeBuildTime(player.id, upgrade, 4)
+			end
 		end
 	end
 end
