@@ -308,7 +308,11 @@ function Religious_Tickets()
 		
 		-- Get the current tickets/gold for each
 		local currentTickets = Player_GetResource(player.id, RT_Gold)
-		tonumber(currentTickets)
+		
+		if currentTicket == 0 then
+			Religious_EndGame(player)
+			break
+		end
 
 		-- If the current number of tickets for player is 0 then skip the rest of the function
 		if currentTickets <= 0 or currentTickets == nil then
@@ -337,6 +341,22 @@ function Religious_Tickets()
 					print("Removed tickets")
 				end
 			end
+		end
+	end
+end
+	
+function Religious_Endgame(losingPlayer)
+	Core_OnGameOver()	
+			
+	-- For every player
+	for i, player in pairs(PLAYERS) do
+		
+		-- If player is enemy to losingPlayer then they win
+		if Player_ObserveRelationship(player.id, losingPlayer.id) == R_ENEMY then
+			Core_SetPlayerVictorious(player.id, Religious_WinnerPresentation, WR_RELIGIOUS)	
+		-- If player is losingPlayers ally
+		else
+			Core_SetPlayerDefeated(player.id, Religious_LoserPresentation, WR_RELIGIOUS)
 		end
 	end
 end
