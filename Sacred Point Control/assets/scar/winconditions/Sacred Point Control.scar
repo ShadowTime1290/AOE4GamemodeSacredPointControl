@@ -197,6 +197,15 @@ end
 
 function Mod_CreateProductionBuildings()
     for _, player in pairs(PLAYERS) do
+        local blueprints = {
+            EH_GetCivilizationEntity(player.raceName, EH_BP_BARRACKS),
+            EH_GetCivilizationEntity(player.raceName, EH_BP_ARCHERY_RANGE),
+            EH_GetCivilizationEntity(player.raceName, EH_BP_STABLE),
+            EH_GetCivilizationEntity(player.raceName, EH_BP_WORKSHOP),
+            EH_GetCivilizationEntity(player.raceName, EH_BP_BLACKSMITH),
+            EH_GetCivilizationEntity(player.raceName, EH_BP_KEEP)
+        }
+
         local spawn_position = player.monastery.position
 
         -- Calculate the positions around the spawn_position in a circle with a radius of 20
@@ -216,35 +225,14 @@ function Mod_CreateProductionBuildings()
 
         -- Place one building of each type at the calculated positions
         for i, position in ipairs(positions) do
-            local blueprintType
-
-            if i == 1 then
-                blueprintType = EH_BP_BARRACKS
-            elseif i == 2 then
-                blueprintType = EH_BP_ARCHERY_RANGE
-            elseif i == 3 then
-                blueprintType = EH_BP_STABLE
-            elseif i == 4 then
-                blueprintType = EH_BP_WORKSHOP
-            elseif i == 5 then
-                blueprintType = EH_BP_BLACKSMITH
-            elseif i == 6 then
-                blueprintType = EH_BP_KEEP
-            end
-
-            local blueprint = EH_GetCivilizationEntity(player.raceName, blueprintType)
-            local scar_position = World_Pos(position.x, World_GetHeightAt(position.x, position.z), position.z)
-
-            if blueprint then
-                LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, blueprint, scar_position, scar_position, false, false)
-                
-                -- Perform additional actions for each building
-                local buildingsOfType = Player_GetEntitiesFromType(player.id, blueprintType)
-                EGroup_ForEach(buildingsOfType, construct)
+            if blueprints[i] then
+                local scar_position = World_Pos(position.x, World_GetHeightAt(position.x, position.z), position.z)
+                LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, blueprints[i], scar_position, scar_position, false, false)
             end
         end
     end
 end
+
 
 
 
