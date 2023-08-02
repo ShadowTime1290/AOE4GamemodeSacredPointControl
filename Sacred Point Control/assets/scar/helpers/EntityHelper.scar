@@ -57,6 +57,7 @@ EH_BP_DEPOSIT_FOOD = "forage_bush"
 EH_BP_DEPOSIT_MARKET = "settlement"
 EH_BP_DEPOSIT_ANIMAL = "animal"
 EH_BP_OUTPOST = "outpost"
+EH_BP_UNIVERSITY = "university"
 
 EH_ENTITY_TABLE = {
 	neutral = {
@@ -89,6 +90,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_control_eng",
 		blacksmith = "building_tech_unit_infantry_control_eng",
 		outpost = "building_defense_outpost_eng",
+		university = "building_tech_university_control_eng",
 	},
 	chinese = {
 		castle = "building_defense_keep_chi",
@@ -110,6 +112,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_control_chi",	
 		blacksmith = "building_tech_unit_infantry_control_chi",	
 		outpost = "building_defense_outpost_chi",
+		university = "building_tech_university_control_chi",
 	},
 	french = {
 		castle = "building_defense_keep_fre",
@@ -131,6 +134,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_control_fre",	
 		blacksmith = "building_tech_unit_infantry_control_fre",
 		outpost = "building_defense_outpost_fre",
+		university = "building_tech_university_control_fre",
 	},
 	hre = {
 		castle = "building_defense_keep_hre",
@@ -153,6 +157,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_control_hre",
 		blacksmith = "building_tech_unit_infantry_control_hre",	
 		outpost = "building_defense_outpost_hre",
+		university = "building_tech_university_control_hre",
 	},
 	rus = {	
 		castle = "building_defense_keep_control_rus",
@@ -173,7 +178,8 @@ EH_ENTITY_TABLE = {
 		scar_dock = "building_unit_naval_rus",	
 		house = "building_house_control_rus",	
 		blacksmith = "building_tech_unit_infantry_control_rus",
-		outpost = "building_defense_wooden_fort_rus",		
+		outpost = "building_defense_wooden_fort_rus",	
+		university = "building_tech_university_control_rus",	
 	},
 	abbasid = {
 		castle = "building_defense_keep_control_abb",
@@ -196,6 +202,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_control_abb",	
 		blacksmith = "building_tech_unit_infantry_control_abb",
 		outpost = "building_defense_outpost_control_abb",
+		university = "building_tech_university_control_abb",
 	},
 	mongol = {
 		castle = "building_defense_keep_control_nov",
@@ -238,6 +245,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_control_sul",	
 		blacksmith = "building_tech_unit_infantry_control_sul",
 		outpost = "building_defense_outpost_control_sul",
+		university = "building_tech_university_control_sul",
 	},
 	malian = {
 		castle = "building_defense_keep_mal",
@@ -259,6 +267,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_mal",	
 		blacksmith = "building_tech_unit_infantry_mal",
 		outpost = "building_defense_outpost_mal",
+		university = "building_tech_university_mal",
 	},
 	ottoman = {
 		castle = "building_defense_keep_ott",
@@ -280,6 +289,7 @@ EH_ENTITY_TABLE = {
 		house = "building_house_ott",	
 		blacksmith = "building_tech_unit_infantry_ott",
 		outpost = "building_defense_outpost_ott",
+		university = "building_tech_university_ott",
 	},
 }
 

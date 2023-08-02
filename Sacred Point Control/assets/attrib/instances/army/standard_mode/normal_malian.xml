@@ -176,38 +176,13 @@
 		</enum_table>
 		<list name="starting_units">
 			<instance_reference name="squad" value="sbps\races\malian\unit_scout_1_mal" List.ItemID="1243697749" />
-			<instance_reference name="squad" value="sbps\races\malian\unit_villager_1_mal" List.ItemID="2071872118" />
-			<instance_reference name="squad" value="sbps\races\malian\unit_villager_1_mal" List.ItemID="1213729998" />
-			<instance_reference name="squad" value="sbps\races\malian\unit_villager_1_mal" List.ItemID="-659715371" />
-			<instance_reference name="squad" value="sbps\races\malian\unit_monk_3_mal" List.ItemID="986495025" />
-			<instance_reference name="squad" value="sbps\races\malian\unit_monk_3_mal" List.ItemID="140647070" />
-			<instance_reference name="squad" value="sbps\races\malian\unit_monk_3_mal" List.ItemID="1601344728" />
+			<instance_reference name="squad" value="sbps\races\malian\unit_monk_3_mal" mod="8334e5fe187e4773b9dc12547d046c01" List.ItemID="986495025" />
 		</list>
 		<template_reference name="starting_units_spawner" value="options\spawn\fixed_offset">
 			<list name="spawn_positions">
 				<group name="position_offset" List.ItemID="-24900966">
 					<float name="x" value="-4" />
 					<float name="y" value="5" />
-				</group>
-				<group name="position_offset" List.ItemID="365214749">
-					<float name="x" value="-2.2" />
-					<float name="y" value="0" />
-				</group>
-				<group name="position_offset" List.ItemID="-296860556">
-					<float name="x" value="-3.3" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="-1795507575">
-					<float name="x" value="-1" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="2077685491">
-					<float name="x" value="-2" />
-					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="-1546828598">
-					<float name="x" value="0" />
-					<float name="y" value="-4" />
 				</group>
 				<group name="position_offset" List.ItemID="-168485139">
 					<float name="x" value="-1" />

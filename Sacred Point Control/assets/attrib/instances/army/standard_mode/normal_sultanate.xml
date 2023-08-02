@@ -210,42 +210,12 @@
 		</enum_table>
 		<list name="starting_units">
 			<instance_reference name="squad" value="sbps\races\sultanate\unit_scout_1_sul" List.ItemID="-1551541776" />
-			<instance_reference name="squad" value="sbps\races\sultanate\unit_villager_1_sul" List.ItemID="-991590659" />
-			<instance_reference name="squad" value="sbps\races\sultanate\unit_villager_1_sul" List.ItemID="-984151532" />
-			<instance_reference name="squad" value="sbps\races\sultanate\unit_villager_1_sul" List.ItemID="1040491504" />
-			<instance_reference name="squad" value="sbps\races\sultanate\unit_monk_2_sul" List.ItemID="375499834" />
-			<instance_reference name="squad" value="sbps\races\sultanate\unit_monk_2_sul" List.ItemID="450227026" />
-			<instance_reference name="squad" value="sbps\races\sultanate\unit_monk_2_sul" List.ItemID="-1797653888" />
 		</list>
 		<template_reference name="starting_units_spawner" value="options\spawn\fixed_offset">
 			<list name="spawn_positions">
 				<group name="position_offset" List.ItemID="630734705">
 					<float name="x" value="-4" />
 					<float name="y" value="5" />
-				</group>
-				<group name="position_offset" List.ItemID="1445280410">
-					<float name="x" value="-2.2" />
-					<float name="y" value="0" />
-				</group>
-				<group name="position_offset" List.ItemID="1258006146">
-					<float name="x" value="-3.3" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="913451367">
-					<float name="x" value="-1" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="632689873">
-					<float name="x" value="-2" />
-					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="1080031773">
-					<float name="x" value="0" />
-					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="-2109726079">
-					<float name="x" value="-1" />
-					<float name="y" value="-6" />
 				</group>
 			</list>
 		</template_reference>

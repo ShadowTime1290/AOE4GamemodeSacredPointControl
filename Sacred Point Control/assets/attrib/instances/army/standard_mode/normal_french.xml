@@ -186,12 +186,7 @@
 		</enum_table>
 		<list name="starting_units">
 			<instance_reference name="squad" value="sbps\races\french\unit_scout_1_fre" List.ItemID="-1973028523" />
-			<instance_reference name="squad" value="sbps\races\french\unit_villager_1_fre" List.ItemID="-394582286" />
-			<instance_reference name="squad" value="sbps\races\french\unit_villager_1_fre" List.ItemID="-2060433151" />
-			<instance_reference name="squad" value="sbps\races\french\unit_villager_1_fre" List.ItemID="422594498" />
-			<instance_reference name="squad" value="sbps\races\french\unit_monk_3_fre" List.ItemID="-1230176254" />
-			<instance_reference name="squad" value="sbps\races\french\unit_monk_3_fre" List.ItemID="960347823" />
-			<instance_reference name="squad" value="sbps\races\french\unit_monk_3_fre" List.ItemID="582514264" />
+			<instance_reference name="squad" value="sbps\races\french\unit_monk_3_fre" mod="8334e5fe187e4773b9dc12547d046c01" List.ItemID="-1230176254" />
 		</list>
 		<template_reference name="starting_units_spawner" value="options\spawn\fixed_offset">
 			<list name="spawn_positions">
@@ -199,29 +194,9 @@
 					<float name="x" value="-4" />
 					<float name="y" value="5" />
 				</group>
-				<group name="position_offset" List.ItemID="1634252481">
-					<float name="x" value="-2.2" />
-					<float name="y" value="0" />
-				</group>
-				<group name="position_offset" List.ItemID="86097248">
-					<float name="x" value="-3.3" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="-32705457">
-					<float name="x" value="-1" />
-					<float name="y" value="-2" />
-				</group>
 				<group name="position_offset" List.ItemID="-501233293">
 					<float name="x" value="-2" />
 					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="1832246019">
-					<float name="x" value="0" />
-					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="-189862390">
-					<float name="x" value="-1" />
-					<float name="y" value="-6" />
 				</group>
 			</list>
 		</template_reference>

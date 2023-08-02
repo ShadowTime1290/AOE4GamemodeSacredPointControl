@@ -165,38 +165,13 @@
 		</enum_table>
 		<list name="starting_units">
 			<instance_reference name="squad" value="sbps\races\ottoman\unit_scout_1_ott" List.ItemID="785400781" />
-			<instance_reference name="squad" value="sbps\races\ottoman\unit_villager_1_ott" List.ItemID="-356191762" />
-			<instance_reference name="squad" value="sbps\races\ottoman\unit_villager_1_ott" List.ItemID="-289581558" />
-			<instance_reference name="squad" value="sbps\races\ottoman\unit_villager_1_ott" List.ItemID="1692639358" />
-			<instance_reference name="squad" value="sbps\races\ottoman\unit_monk_3_ott" List.ItemID="-1721639474" />
-			<instance_reference name="squad" value="sbps\races\ottoman\unit_monk_3_ott" List.ItemID="1400760610" />
-			<instance_reference name="squad" value="sbps\races\ottoman\unit_monk_3_ott" List.ItemID="662983128" />
+			<instance_reference name="squad" value="sbps\races\ottoman\unit_monk_3_ott" mod="8334e5fe187e4773b9dc12547d046c01" List.ItemID="-1721639474" />
 		</list>
 		<template_reference name="starting_units_spawner" value="options\spawn\fixed_offset">
 			<list name="spawn_positions">
 				<group name="position_offset" List.ItemID="-710709295">
 					<float name="x" value="-4" />
 					<float name="y" value="5" />
-				</group>
-				<group name="position_offset" List.ItemID="-1529441548">
-					<float name="x" value="-2.2" />
-					<float name="y" value="0" />
-				</group>
-				<group name="position_offset" List.ItemID="519499218">
-					<float name="x" value="-3.3" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="-340285334">
-					<float name="x" value="-1" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="714138914">
-					<float name="x" value="-2" />
-					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="-1784003280">
-					<float name="x" value="0" />
-					<float name="y" value="-4" />
 				</group>
 				<group name="position_offset" List.ItemID="1356792078">
 					<float name="x" value="-1" />

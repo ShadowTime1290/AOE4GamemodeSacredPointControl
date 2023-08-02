@@ -1,0 +1,125 @@
+<instance version="4" description="" template="upgrade">
+	<group name="upgrade_bag">
+		<group name="time_cost">
+			<enum_table name="cost">
+				<float name="stone" value="500" overrideParent="True" />
+				<float name="gold" value="500" overrideParent="True" />
+			</enum_table>
+		</group>
+		<group name="ui_info">
+			<string name="tooltip_data_template" value="BuildingImprovedUpgradeDataTemplate" overrideParent="True" />
+			<template_reference name="help_text_formatter" value="ui_text_formatter" overrideParent="True">
+				<list name="formatter_arguments" overrideParent="True">
+					<int name="int_value" value="45" overrideParent="True" List.ItemID="-351303832" />
+					<int name="int_value" value="45" overrideParent="True" List.ItemID="304941496" />
+					<int name="int_value" value="45" overrideParent="True" List.ItemID="-2114142565" />
+					<int name="int_value" value="15" overrideParent="True" List.ItemID="1510094159" />
+				</list>
+				<locstring name="formatter" value="11202535" />
+			</template_reference>
+			<string name="sound" value="sfx_ui_produce_upgrade_building_click" overrideParent="True" />
+			<string name="hotkey_name" value="" overrideParent="True" />
+		</group>
+		<list name="requirements" overrideParent="True">
+			<template_reference name="required" value="requirements\required_player_upgrade" List.ItemID="989333200">
+				<enum name="reason" value="usage" />
+				<locstring name="ui_name" value="0" />
+				<bool name="is_present" value="False" />
+				<int name="max_completed" value="100" />
+				<int name="min_completed" value="1" />
+				<instance_reference name="upgrade_name" value="upgrade\races\mongol\research\unit\upgrade_unit_religious_tithe_barn_4_mon" mod="8334e5fe187e4773b9dc12547d046c01" />
+				<bool name="include_queued" value="True" />
+				<group name="include_pbg_parenting">
+					<bool name="include_child_pbgs" value="False" />
+					<bool name="include_parent_pbgs" value="False" />
+				</group>
+				<bool name="include_completed" value="False" />
+			</template_reference>
+			<template_reference name="required" value="requirements\required_player_upgrade" List.ItemID="1392958809">
+				<enum name="reason" value="usage" />
+				<locstring name="ui_name" value="0" />
+				<bool name="is_present" value="True" />
+				<int name="max_completed" value="100" />
+				<int name="min_completed" value="1" />
+				<instance_reference name="upgrade_name" value="upgrade\dev\ages\imperial_age" />
+				<bool name="include_queued" value="False" />
+				<group name="include_pbg_parenting">
+					<bool name="include_child_pbgs" value="False" />
+					<bool name="include_parent_pbgs" value="False" />
+				</group>
+				<bool name="include_completed" value="True" />
+			</template_reference>
+			<template_reference name="required" value="requirements\required_player_upgrade" List.ItemID="-374163950">
+				<enum name="reason" value="usage_and_display" />
+				<locstring name="ui_name" value="0" />
+				<bool name="is_present" value="False" />
+				<int name="max_completed" value="100" />
+				<int name="min_completed" value="1" />
+				<instance_reference name="upgrade_name" value="upgrade\races\mongol\research\unit\upgrade_unit_religious_tithe_barn_4_improved_mon" mod="8334e5fe187e4773b9dc12547d046c01" />
+				<bool name="include_queued" value="True" />
+				<group name="include_pbg_parenting">
+					<bool name="include_child_pbgs" value="False" />
+					<bool name="include_parent_pbgs" value="False" />
+				</group>
+				<bool name="include_completed" value="True" />
+			</template_reference>
+			<template_reference name="required" value="requirements\required_any_in_list" comment="Must be in same district as an Ovoo" List.ItemID="-1008695742">
+				<enum name="reason" value="usage" />
+				<locstring name="ui_name" value="11155011" />
+				<list name="requirements" overrideParent="True">
+					<template_reference name="requirement" value="requirements\required_statemodelbool" List.ItemID="502217811">
+						<locstring name="ui_name" value="11155011" />
+						<enum name="reason" value="usage" overrideParent="True" />
+						<enum name="key" value="building_has_ovoo_aura_mon" overrideParent="True" />
+						<enum name="data_source_type" value="self_datasource" />
+						<bool name="default_value" value="False" overrideParent="True" />
+						<bool name="compare_to_value" value="True" overrideParent="True" />
+					</template_reference>
+					<template_reference name="requirement" value="requirements\required_statemodelbool" List.ItemID="-1918109869">
+						<locstring name="ui_name" value="0" />
+						<enum name="reason" value="usage" />
+						<enum name="key" value="district_stupa_monastery_ovoo_aura" />
+						<enum name="data_source_type" value="player_datasource" />
+						<bool name="default_value" value="False" />
+						<bool name="compare_to_value" value="True" />
+					</template_reference>
+				</list>
+			</template_reference>
+		</list>
+		<group name="state_tree_references">
+			<template_reference name="on_action_tree" value="state_tree_reference_info">
+				<state_tree_node name="ActionTree_OpeningBranch" value="common_upgrade_completion_events\speech_celebrate\celebrate" overrideParent="True" />
+			</template_reference>
+		</group>
+		<instance_reference name="ui_menu" value="menu\mon_improved_production_small" overrideParent="True" />
+		<group name="ui_codex_info">
+			<bool name="exclusive" value="True" overrideParent="True" />
+		</group>
+		<list name="float_properties">
+			<template_reference name="float" value="upgradebag_float_property" List.ItemID="1303721258" List.ParentItemID="1303721258">
+				<float name="value" value="45" overrideParent="True" />
+			</template_reference>
+			<template_reference name="float" value="upgradebag_float_property" List.ItemID="1475073692" List.ParentItemID="1475073692">
+				<float name="value" value="45" overrideParent="True" />
+			</template_reference>
+			<template_reference name="float" value="upgradebag_float_property" List.ItemID="1186636956" List.ParentItemID="1186636956">
+				<float name="value" value="45" overrideParent="True" />
+			</template_reference>
+		</list>
+		<list name="upgrade_type" overrideParent="True">
+			<enum name="upgrade_type" value="economic_upgrade" overrideParent="True" List.ItemID="-1498577390" />
+			<enum name="upgrade_type" value="mongol_upgrade" List.ItemID="-1644040715" />
+			<enum name="upgrade_type" value="scar_economic_upgrade" overrideParent="True" List.ItemID="-1788489711" />
+			<enum name="upgrade_type" value="scar_nontiered_upgrade" overrideParent="True" List.ItemID="921768119" />
+			<enum name="upgrade_type" value="scar_imperial_age_upgrade" overrideParent="True" List.ItemID="-1952746511" />
+			<enum name="upgrade_type" value="scar_mongol_improved" List.ItemID="1988008364" />
+		</list>
+		<group name="ui_position">
+			<int name="ui_position_row" value="-1" overrideParent="True" />
+			<int name="ui_position_column" value="-1" overrideParent="True" />
+		</group>
+		<instance_reference name="hotkey_binding" value="" overrideParent="True" />
+	</group>
+	<uniqueid name="pbgid" value="173571" />
+	<instance_reference name="parent_pbg" value="upgrade\races\common\research\unit\upgrade_unit_religious_tithe_barn_4" />
+</instance>

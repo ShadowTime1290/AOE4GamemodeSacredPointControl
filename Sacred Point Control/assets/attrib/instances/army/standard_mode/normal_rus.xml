@@ -186,38 +186,13 @@
 		</enum_table>
 		<list name="starting_units">
 			<instance_reference name="squad" value="sbps\races\rus\unit_scout_1_rus" List.ItemID="-577141436" />
-			<instance_reference name="squad" value="sbps\races\rus\unit_villager_1_rus" List.ItemID="1237208723" />
-			<instance_reference name="squad" value="sbps\races\rus\unit_villager_1_rus" List.ItemID="2128755635" />
-			<instance_reference name="squad" value="sbps\races\rus\unit_villager_1_rus" List.ItemID="-1569081463" />
-			<instance_reference name="squad" value="sbps\races\rus\unit_monk_3_rus" List.ItemID="1245497509" />
-			<instance_reference name="squad" value="sbps\races\rus\unit_monk_3_rus" List.ItemID="-30754087" />
-			<instance_reference name="squad" value="sbps\races\rus\unit_monk_3_rus" List.ItemID="159310351" />
+			<instance_reference name="squad" value="sbps\races\rus\unit_monk_3_rus" mod="8334e5fe187e4773b9dc12547d046c01" List.ItemID="1245497509" />
 		</list>
 		<template_reference name="starting_units_spawner" value="options\spawn\fixed_offset">
 			<list name="spawn_positions">
 				<group name="position_offset" List.ItemID="-2083628146">
 					<float name="x" value="-4" />
 					<float name="y" value="5" />
-				</group>
-				<group name="position_offset" List.ItemID="-471461596">
-					<float name="x" value="-2.2" />
-					<float name="y" value="0" />
-				</group>
-				<group name="position_offset" List.ItemID="-2072587517">
-					<float name="x" value="-3.3" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="-1199120395">
-					<float name="x" value="-1" />
-					<float name="y" value="-2" />
-				</group>
-				<group name="position_offset" List.ItemID="-1628239752">
-					<float name="x" value="-2" />
-					<float name="y" value="-4" />
-				</group>
-				<group name="position_offset" List.ItemID="338988905">
-					<float name="x" value="0" />
-					<float name="y" value="-4" />
 				</group>
 				<group name="position_offset" List.ItemID="1412090113">
 					<float name="x" value="-1" />

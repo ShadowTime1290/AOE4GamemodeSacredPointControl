@@ -38,6 +38,8 @@ _mod = {
 -- Register the win condition (Some functions can be prepended with "Mod_" to be called automatically as part of the scripting framework)
 Core_RegisterModule(_mod.module)
 
+globalPlayerStartingPositions = {}
+
 -----------------------------------------------------------------------
 -- Scripting framework 
 -----------------------------------------------------------------------
@@ -94,16 +96,20 @@ end
 
 -- Called on match initialization before handing control to the player
 function Mod_OnInit()
-
+	StorePlayerStartingPositions()
+	ClearSpawnAreasOfResources()
 	for i, player in pairs(PLAYERS) do
 		Player_SetStateModelFloat(player.id,"sacred_site_gold_income_per_second",0)
 		Player_SetStateModelFloat(player.id,"relic_gold_income_per_second",0)
+		Player_SetStateModelFloat(player.id,"hunter_wolf_value_rus",0)
+		Player_SetStateModelFloat(player.id,"hunter_boar_value_rus",0)
+		Player_SetStateModelFloat(player.id,"hunter_deer_value_rus",0)
+		Player_SetStateModelFloat(player.id,"hunter_sheep_value_rus",0)
 	end
 end
 
 -- Called after initialization is done when game is fading up from black
 function Mod_Start()
-	
 	-- Set player to Age 4, Resources to 0 except gold at 1600 and population cap to 200
 	for i, player in pairs(PLAYERS) do
 		
@@ -141,10 +147,13 @@ function Mod_Start()
 
 	Mod_FindMonastery()
 
-	--Mod_CreateOutposts(10)
 	for _, player in pairs(PLAYERS) do
-		Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_BARRACKS, EH_BP_ARCHERY_RANGE, EH_BP_STABLE, EH_BP_WORKSHOP, EH_BP_BLACKSMITH}, player.monastery.position, 20)
-		Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_OUTPOST}, player.monastery.position, 40, 15)
+		if player.raceName == "mongol" then
+			Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_BARRACKS, EH_BP_ARCHERY_RANGE, EH_BP_STABLE, EH_BP_WORKSHOP, EH_BP_BLACKSMITH}, true, player.monastery.position, 20)
+		else
+			Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_BARRACKS, EH_BP_ARCHERY_RANGE, EH_BP_STABLE, EH_BP_WORKSHOP, EH_BP_BLACKSMITH, EH_BP_UNIVERSITY}, true, player.monastery.position, 20)
+		end
+		Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_OUTPOST}, true, player.monastery.position, _religious.spawn_protection_radius, 10)
 	end
 
 	Rule_AddInterval(SpawnProtection,0.1)
@@ -163,6 +172,16 @@ function Mod_OnGameOver()
 	
 	
 	
+end
+
+function StorePlayerStartingPositions()
+    for i, player in pairs(PLAYERS) do
+        -- Get the player's starting position
+        local playerStartingPosition = Player_GetStartingPosition(player.id)
+
+        -- Store the starting position in the global table with the player's ID as the key
+        globalPlayerStartingPositions[player.id] = playerStartingPosition
+    end
 end
 
 -- This function finds the starting Town Center for all players in the match, reveals it to all other players, and increases its production speed
@@ -192,12 +211,16 @@ function Mod_FindMonastery()
             position = position,
         }
         
-        -- Reveal monastery locations for the first 30 seconds of the match
-        FOW_RevealArea(player.monastery.position, 40, 30)
+        -- Reveal monastery locations for the first 10 seconds of the match
+        FOW_RevealArea(player.monastery.position, 40, 10)
+
+		for i, site in ipairs(_religious.sites) do
+			FOW_RevealArea(site.pos, 20, -1)
+		end
     end
 end
 
-function Mod_ConstructBuildingsInRadiusAroundPoint(player, buildingBps, centerpoint, radius, num_buildings)
+function Mod_ConstructBuildingsInRadiusAroundPoint(player, buildingBps, force, centerpoint, radius, num_buildings)
     num_buildings = num_buildings or #buildingBps
 
     for i = 1, num_buildings do
@@ -217,6 +240,13 @@ function Mod_ConstructBuildingsInRadiusAroundPoint(player, buildingBps, centerpo
         local blueprint = EH_GetCivilizationEntity(playerrace, buildingBp)
         local scar_position = World_Pos(position.x, World_GetHeightAt(position.x, position.z), position.z)
 
+		if force == true then
+			local calcPlacementResult = Entity_CalcConstructionPlacement(blueprint, player.id, scar_position)
+			if calcPlacementResult.success then
+				scar_position = calcPlacementResult.position
+			end
+		end
+
         if blueprint then
             LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, blueprint, scar_position, scar_position, false, false)
             local placed = Player_GetEntitiesFromType(player.id, buildingBp)
@@ -228,55 +258,6 @@ function Mod_ConstructBuildingsInRadiusAroundPoint(player, buildingBps, centerpo
     end
 end
 
-
-function Mod_CreateOutposts()
-	for _, player in pairs(PLAYERS) do
-		local outpost_blueprint = EH_GetCivilizationEntity(player.raceName, EH_BP_OUTPOST)
-		local spawn_position = player.monastery.position
-		Mod_CreateOutpostsAroundPosition(player, outpost_blueprint, spawn_position, angle)
-	end	
-end
-
-function Mod_CreateOutpostsAroundPosition(player, outpost_bp, center_position, angle)
-	local radius = 40
-	local degrees = 360 / angle
-	
-	local placeOutpost = function(offset)
-		local start_at = World_Pos(0, 0, 0)
-		
-		start_at = GetPositionWithOffset(center_position, offset)
-		LocalCommand_PlayerPlaceAndConstructEntitiesPlanned(player.id, outpost_bp, start_at, start_at, false, false)
-	end
-	
-	local construct = function(gid, idx, eid)
-		Entity_ForceSelfConstruct(eid)
-	end
-	
-	for i = 0, degrees do
-		local position = GetPositionOnCircle(radius, i * angle)
-		
-		placeOutpost(position)
-	end
-
-	local walls = Player_GetEntitiesFromType(player.id, EH_BP_OUTPOST)
-	EGroup_ForEach(walls, construct)
-end
-
-function GetPositionWithOffset(center, offset)
-	local x_str = center.x + offset.x
-	local z_str = center.z + offset.z
-	return World_Pos(x_str, World_GetHeightAt(x_str, z_str), z_str)
-end
-
-function GetPositionOnCircle(radius, degree)
-	
-	local position = {
-		x = radius * math.cos(degree),
-		z = radius * math.sin(degree)
-	}
-    
-	return position
-end
 
 function SpawnProtection()
 	for i, player in pairs(PLAYERS) do
@@ -304,4 +285,23 @@ function SpawnProtection()
 		EGroup_SetInvulnerable(eg_nearspawn, false)
 		SGroup_SetInvulnerable(sg_nearspawn, false)
 	end
+end
+
+function ClearSpawnAreasOfResources()
+    for playerID, startingPosition in pairs(globalPlayerStartingPositions) do
+        -- Create or find the entity group "eg_resourcesatspawn" for each player
+        local resourcesAtSpawn = EGroup_CreateIfNotFound("eg_resourcesatspawn")
+
+        -- Get all entities of type "resource" within a 40-unit radius around the player's starting position
+		World_GetEntitiesNearPoint(playerID, resourcesAtSpawn, startingPosition, 40, OT_Neutral) 
+
+        -- Filter and keep only entities with the "resource" type in the "eg_resourcesatspawn" group
+        EGroup_Filter(resourcesAtSpawn, "resource", FILTER_KEEP)
+
+        -- Destroy the resources in the "eg_resourcesatspawn" group
+        local destroy = function(gid, idx, eid)
+            Entity_Destroy(eid)
+        end
+        EGroup_ForEach(resourcesAtSpawn, destroy)
+    end
 end

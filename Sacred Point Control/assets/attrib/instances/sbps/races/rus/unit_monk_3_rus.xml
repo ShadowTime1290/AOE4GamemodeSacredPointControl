@@ -1,0 +1,21 @@
+<instance version="4" override_type="merge" description="English Monk " template="sbps">
+	<list name="extensions" overrideParent="True">
+		<template_reference name="squadexts" value="sbpextensions\squad_requirement_ext" List.ItemID="-1249928404" List.ParentItemID="-626348215">
+			<list name="requirement_table">
+				<template_reference name="required" value="requirements\required_squad" List.ItemID="937665736">
+					<enum name="reason" value="usage" />
+					<locstring name="ui_name" value="2146745" overrideParent="True" />
+					<float name="max_squad_cap" value="1" />
+					<instance_reference name="squad_name" value="sbps\races\rus\unit_monk_3_rus" overrideParent="True" />
+					<group name="include_pbg_parenting">
+						<bool name="include_child_pbgs" value="False" />
+						<bool name="include_parent_pbgs" value="False" />
+					</group>
+				</template_reference>
+			</list>
+			<state_tree_node name="requirement_statetree" value="" />
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="133469" />
+	<instance_reference name="parent_pbg" value="sbps\races\core\unit_monk_3" />
+</instance>

@@ -1,0 +1,43 @@
+<instance version="4" override_type="merge" description="Mongol Monk (double unit construction)" template="sbps">
+	<list name="extensions" overrideParent="True">
+		<template_reference name="squadexts" value="sbpextensions\squad_requirement_ext" List.ItemID="1463386633" List.ParentItemID="-2003411757">
+			<list name="requirement_table" overrideParent="True">
+				<template_reference name="required" value="requirements\required_any_in_list" comment="Must be in same district as an Ovoo" overrideParent="True" List.ItemID="2052490408">
+					<enum name="reason" value="usage" />
+					<locstring name="ui_name" value="11155011" />
+					<list name="requirements" overrideParent="True">
+						<template_reference name="requirement" value="requirements\required_statemodelbool" List.ItemID="585908886">
+							<locstring name="ui_name" value="11155011" />
+							<enum name="reason" value="usage" overrideParent="True" />
+							<enum name="key" value="building_has_ovoo_aura_mon" overrideParent="True" />
+							<enum name="data_source_type" value="self_datasource" />
+							<bool name="default_value" value="False" overrideParent="True" />
+							<bool name="compare_to_value" value="True" overrideParent="True" />
+						</template_reference>
+						<template_reference name="requirement" value="requirements\required_statemodelbool" List.ItemID="1815685976">
+							<locstring name="ui_name" value="0" />
+							<enum name="reason" value="usage" />
+							<enum name="key" value="district_stupa_monastery_ovoo_aura" />
+							<enum name="data_source_type" value="player_datasource" />
+							<bool name="default_value" value="False" />
+							<bool name="compare_to_value" value="True" />
+						</template_reference>
+					</list>
+				</template_reference>
+				<template_reference name="required" value="requirements\required_squad" List.ItemID="568069833">
+					<enum name="reason" value="usage" />
+					<locstring name="ui_name" value="2146745" overrideParent="True" />
+					<float name="max_squad_cap" value="1" overrideParent="True" />
+					<instance_reference name="squad_name" value="sbps\races\mongol\unit_monk_3_mon" overrideParent="True" />
+					<group name="include_pbg_parenting">
+						<bool name="include_child_pbgs" value="False" />
+						<bool name="include_parent_pbgs" value="False" />
+					</group>
+				</template_reference>
+			</list>
+			<state_tree_node name="requirement_statetree" value="" />
+		</template_reference>
+	</list>
+	<uniqueid name="pbgid" value="172847" />
+	<instance_reference name="parent_pbg" value="sbps\races\mongol\unit_monk_3_mon" />
+</instance>

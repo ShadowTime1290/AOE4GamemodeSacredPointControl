@@ -518,7 +518,7 @@
 			<list name="standard_upgrades">
 				<instance_reference name="upgrade" value="upgrade\races\common\research\unit\upgrade_unit_religious_herbal_medicine_4" List.ItemID="-1055076434" />
 				<instance_reference name="upgrade" value="upgrade\races\common\research\unit\upgrade_unit_religious_piety_4" List.ItemID="1569364958" />
-				<instance_reference name="upgrade" value="upgrade\races\common\research\unit\upgrade_unit_religious_tithe_barn_4" List.ItemID="177135645" />
+				<instance_reference name="upgrade" value="upgrade\races\common\research\unit\upgrade_unit_religious_tithe_barn_4" mod="8334e5fe187e4773b9dc12547d046c01" List.ItemID="177135645" />
 			</list>
 			<int name="max_queue_size_override" value="-1" />
 			<state_tree_node name="production_item_completed_openingbranch" value="" />
