@@ -317,45 +317,128 @@ function Table_Contains(tbl, x)
 end
 
 
---Ticket loss function that removes tickets based on what the sacred site control balance is.
 function Religious_Tickets()
+    -- For every team
+    for team, teamData in pairs(TEAMS) do
+        -- Create a table to track previous ticket count for each player on the team
+        local teamPreviousTickets = {}
 
-	-- For every player
-	for j, player in pairs(PLAYERS) do
-		
-		-- Get the current tickets/gold for each
-		local currentTickets = Player_GetResource(player.id, RT_Gold)
+        -- Get the number of players on the team
+        local totalPlayers = #teamData.players
 
-		-- If the current number of tickets for player is 0 then skip the rest of the function
-		if currentTickets <= 0 or currentTickets == nil then
-			print("No tickets left!")
-		else
-			-- Gets the number of holy sites controlled by enemies
-			local sites = Religious_EnemySitesControlled(player)
+        -- If the team has players, proceed with tracking ticket losses and applying them
+        if totalPlayers > 0 then
+            -- Calculate the ticket loss for each player on the team
+            for _, playerID in ipairs(teamData.players) do
+                local player = PLAYERS[playerID]
+                local currentTickets = Player_GetResource(player.id, RT_Gold)
 
-			--If the number of holy sites controlled by the enemy is not zero then perform ticket loss calculation
-			if sites ~= 0 then
-				local multiplier = _religious.options.ticket_multiplier
+                -- If the player's previous ticket count is not recorded, assume it's the current ticket count
+                local previousTickets = teamPreviousTickets[playerID] or currentTickets
 
-				if (_religious.options.fast_drain and sites == #_religious.sites) then
-					multiplier = multiplier * 2
-				end
+                -- Calculate the ticket loss for this player
+                local ticketLoss = previousTickets - currentTickets
 
-				local ticket_loss = sites * -1 * multiplier
+                -- Store the current ticket count for the next iteration
+                teamPreviousTickets[playerID] = currentTickets
 
-				if currentTickets + ticket_loss <= 0 then
-					print("Tickets less than loss")
-					Player_AddResource(player.id, RT_Gold, (currentTickets * -1))
-					print("Set tickets to 0")
-				else
-					print("Removing tickets " .. ticket_loss)
-					Player_AddResource(player.id, RT_Gold, ticket_loss) 
-					print("Removed tickets")
-				end
+                -- Apply the ticket loss to the player
+                local playerNewTickets = currentTickets - ticketLoss
+                if playerNewTickets < 0 then
+                    playerNewTickets = 0
+                end
+
+                Player_SetResource(player.id, RT_Gold, playerNewTickets)
+            end
+
+            -- Calculate the total ticket loss for the team
+            local totalTeamLoss = 0
+            for _, playerID in ipairs(teamData.players) do
+                totalTeamLoss = totalTeamLoss + (teamPreviousTickets[playerID] - Player_GetResource(PLAYERS[playerID].id, RT_Gold))
+            end
+
+            -- Apply the total ticket loss to all players on the team
+            local lossPerPlayer = totalTeamLoss / totalPlayers
+            for _, playerID in ipairs(teamData.players) do
+                local playerTickets = Player_GetResource(PLAYERS[playerID].id, RT_Gold)
+                local playerNewTickets = playerTickets - lossPerPlayer
+
+                if playerNewTickets < 0 then
+                    playerNewTickets = 0
+                end
+
+                Player_SetResource(PLAYERS[playerID].id, RT_Gold, playerNewTickets)
+            end
+        end
+    end
+
+    local currentTickets = Player_GetResource(player.id, RT_Gold)
+
+    -- If the current number of tickets for player is 0 then skip the rest of the function
+    if currentTickets <= 0 or currentTickets == nil then
+        print("No tickets left!")
+    else
+        -- Get the team of the current player
+        local team = Player_GetTeam(player.id)
+
+        -- Initialize the previous ticket count for the player's team if not already done
+        if not teamPreviousTickets[team] then
+            teamPreviousTickets[team] = {}
+        end
+
+        -- Get the previous ticket count for this player
+        local previousTickets = teamPreviousTickets[team][player.id] or currentTickets
+
+        -- Calculate the ticket loss for this player
+        local ticketLoss = previousTickets - currentTickets
+
+        -- Store the current ticket count for the next iteration
+         teamPreviousTickets[team][player.id] = currentTickets
+
+         -- Apply the ticket loss to all players on the team
+        local teamPlayers = Core_GetPlayerTeamsEntry(team).players
+        local totalPlayers = #teamPlayers
+        if totalPlayers > 0 then
+            local lossPerPlayer = ticketLoss / totalPlayers
+
+            for _, playerID in ipairs(teamPlayers) do
+                local playerTickets = Player_GetResource(playerID, RT_Gold)
+                local playerNewTickets = playerTickets - lossPerPlayer
+
+                if playerNewTickets < 0 then
+                    playerNewTickets = 0
+                end
+
+                Player_SetResource(playerID, RT_Gold, playerNewTickets)
+            end
+        end
+
+		-- Gets the number of holy sites controlled by enemies
+		local sites = Religious_EnemySitesControlled(player)
+
+		--If the number of holy sites controlled by the enemy is not zero then perform ticket loss calculation
+		if sites ~= 0 then
+			local multiplier = _religious.options.ticket_multiplier
+
+			if (_religious.options.fast_drain and sites == #_religious.sites) then
+				multiplier = multiplier * 2
+			end
+
+			local ticket_loss = sites * -1 * multiplier
+
+			if currentTickets + ticket_loss <= 0 then
+				print("Tickets less than loss")
+				Player_AddResource(player.id, RT_Gold, (currentTickets * -1))
+				print("Set tickets to 0")
+			else
+				print("Removing tickets " .. ticket_loss)
+				Player_AddResource(player.id, RT_Gold, ticket_loss) 
+				print("Removed tickets")
 			end
 		end
 	end
 end
+
 	
 function Religious_Endgame(losingPlayer)
 	Core_OnGameOver()	

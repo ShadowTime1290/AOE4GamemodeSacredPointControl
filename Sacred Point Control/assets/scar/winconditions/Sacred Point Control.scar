@@ -154,10 +154,10 @@ function Mod_Start()
 			Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_BARRACKS, EH_BP_ARCHERY_RANGE, EH_BP_STABLE, EH_BP_WORKSHOP, EH_BP_BLACKSMITH, EH_BP_UNIVERSITY}, true, player.monastery.position, 20)
 		end
 		Mod_ConstructBuildingsInRadiusAroundPoint(player, {EH_BP_OUTPOST}, true, player.monastery.position, _religious.spawn_protection_radius, 10)
+		Command_PlayerBroadcastMessage(player.id,player.id,0,"Test message")
 	end
 
 	Rule_AddInterval(SpawnProtection,0.1)
-
 end
 
 -- Called when Core_SetPlayerDefeated() is invoked. Signals that a player has been eliminated from play due to defeat.
