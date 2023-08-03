@@ -325,11 +325,6 @@ function Religious_Tickets()
 		
 		-- Get the current tickets/gold for each
 		local currentTickets = Player_GetResource(player.id, RT_Gold)
-		
-		if currentTickets == 0 then
-			Religious_EndGame(player)
-			break
-		end
 
 		-- If the current number of tickets for player is 0 then skip the rest of the function
 		if currentTickets <= 0 or currentTickets == nil then
